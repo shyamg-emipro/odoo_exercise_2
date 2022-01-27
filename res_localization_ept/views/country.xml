@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_res_localization_ept_tree" model="ir.ui.view">
+        <field name="name">res.country.ept.tree</field>
+        <field name="model">res.country.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Countries">
+                <field name="name" />
+                <field name="code" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_res_localization_ept_from" model="ir.ui.view">
+        <field name="name">res.country.ept.from</field>
+        <field name="model">res.country.ept</field>
+        <field name="arch" type="xml">
+            <form string="Country">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="code" />
+                        </group>
+                    </group>
+                    <group>
+                        <notebook>
+                            <page name="res_country_ept_state_details" string="States">
+                                <field name="state">
+                                    <tree string="States">
+                                        <field name="name" />
+                                        <field name="code" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_res_country_ept_filter" model="ir.ui.view">
+        <field name="name">res.country.ept.search</field>
+        <field name="model">res.country.ept</field>
+        <field name="arch" type="xml">
+            <search string="Search Country">
+                <field name="name" />
+                <field name="code" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_res_country_ept_window" model="ir.actions.act_window">
+        <field name="name">Countries</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_res_country_ept_filter" />
+        <field name="res_model">res.country.ept</field>
+        <field name="help" type="html">
+            <p>Opps, There are no records in the Countries!</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_res_country_ept_root"
+              name="Localization Ept"
+              />
+
+    <menuitem id="menu_res_country_ept_sub1"
+              name="Localization"
+              parent="menu_res_country_ept_root"
+              />
+
+    <menuitem id="menu_res_country_ept_country"
+              name="Countries"
+              parent="menu_res_country_ept_sub1"
+              action="action_res_country_ept_window"
+              />
+</odoo>

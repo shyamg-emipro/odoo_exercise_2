@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_Localization_ept1,User: Localization1,model_res_country_ept,group_localization_user,1,1,1,1
+access_Localization_ept2,User: Localization2,model_res_state_ept,group_localization_user,1,1,1,1
+access_Localization_ept3,User: Localization3,model_res_city_ept,group_localization_user,1,1,1,1

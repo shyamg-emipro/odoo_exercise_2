@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_res_state_ept_tree" model="ir.ui.view">
+        <field name="name">res.state.ept.tree</field>
+        <field name="model">res.state.ept</field>
+        <field name="arch" type="xml">
+            <tree string="States">
+                <field name="name" />
+                <field name="code" />
+                <field name="cities" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_res_state_ept_form" model="ir.ui.view">
+        <field name="name">res.state.ept.form</field>
+        <field name="model">res.state.ept</field>
+        <field name="arch" type="xml">
+            <form string="State">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="code" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="cities">
+                            <tree string="Cities">
+                                <field name="name" />
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_res_state_ept_filter" model="ir.ui.view">
+        <field name="name">res.state.ept.search</field>
+        <field name="model">res.state.ept</field>
+        <field name="arch" type="xml">
+            <search string="Search State">
+                <field name="name" />
+                <field name="code" />
+                <field name="country_id" />
+                <group expand="0" string="Group By">
+                    <filter name="res_state_ept_country" string="Country" context="{'group_by': 'country_id'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_res_state_ept_window" model="ir.actions.act_window">
+        <field name="name">res.state.ept.window</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_res_state_ept_filter" />
+        <field name="res_model">res.state.ept</field>
+        <field name="help" type="html">
+            <p>Opps, There are no states records to show!</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_res_state_ept_sub2"
+              name="States"
+              parent="menu_res_country_ept_sub1"
+              action = "action_res_state_ept_window"
+              />
+</odoo>

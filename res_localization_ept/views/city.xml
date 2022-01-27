@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_res_city_ept_tree" model="ir.ui.view">
+        <field name="name">res.city.ept.tree</field>
+        <field name="model">res.city.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Cities" editable="top">
+                <field name="name" />
+                <field name="state_id">
+                    <field name="name" />
+                </field>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_res_city_ept_filter" model="ir.ui.view">
+        <field name="name">res.city.ept.search</field>
+        <field name="model">res.city.ept</field>
+        <field name="arch" type="xml">
+            <search string="Search city">
+                <field name="name" />
+                <field name="state_id" />
+                <group expand="0" string="Group By">
+                    <filter name="res_city_ept_state" string="State" context="{'group_by': 'state_id'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_res_city_ept_window" model="ir.actions.act_window">
+        <field name="name">Cities</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="view_res_city_ept_filter" />
+        <field name="res_model">res.city.ept</field>
+        <field name="help" type="html">
+            <p>Opps, There are no records in the City!</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_res_city_ept_sub2"
+              name="Cities"
+              parent="menu_res_country_ept_sub1"
+              action="action_res_city_ept_window"
+              />
+</odoo>
