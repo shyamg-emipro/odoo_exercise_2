@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_course_ept_tree" model="ir.ui.view">
+        <field name="name">course.ept.tree</field>
+        <field name="model">course.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Courses">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_course_ept_form" model="ir.ui.view">
+        <field name="name">course.ept.form</field>
+        <field name="model">course.ept</field>
+        <field name="arch" type="xml">
+            <form string="Course">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                    </group>
+                    <group>
+                        <notebook>
+                            <page string="Students" name="course.ept.students">
+                                <field name="student_ids">
+                                    <tree string="Students" editable="top">
+                                        <field name="name" />
+                                        <field name="student_class" />
+                                        <field name="birthdate" />
+                                    </tree>
+                                    <form string="Student">
+                                        <group>
+                                            <field name="name" />
+                                            <field name="student_class" />
+                                            <field name="birthdate" />
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_course_ept_filter" model="ir.ui.view">
+        <field name="name">course.ept.search</field>
+        <field name="model">course.ept</field>
+        <field name="arch" type="xml">
+            <search string="Search Course">
+                <field name="name" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_course_ept_window" model="ir.actions.act_window">
+        <field name="name">Courses</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_course_ept_filter" />
+        <field name="res_model">course.ept</field>
+        <field name="help" type="html">
+            <p>Opps, There are no records available in Courses!</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_course_ept"
+              name="Courses"
+              parent="menu_student_ept_sub1"
+              action="action_course_ept_window"
+              />
+</odoo>

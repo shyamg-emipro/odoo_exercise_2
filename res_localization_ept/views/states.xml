@@ -7,6 +7,7 @@
             <tree string="States">
                 <field name="name" />
                 <field name="code" />
+                <field name="country_id" />
                 <field name="cities" />
             </tree>
         </field>
@@ -22,14 +23,19 @@
                         <group>
                             <field name="name" />
                             <field name="code" />
+                            <field name="country_id" />
                         </group>
                     </group>
                     <group>
-                        <field name="cities">
-                            <tree string="Cities">
-                                <field name="name" />
-                            </tree>
-                        </field>
+                        <notebook>
+                            <page string="Cities" name="res.state.ept.cities">
+                                <field name="cities">
+                                    <tree string="Cities" editable="top">
+                                        <field name="name" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                     </group>
                 </sheet>
             </form>
@@ -52,7 +58,7 @@
     </record>
 
     <record id="action_res_state_ept_window" model="ir.actions.act_window">
-        <field name="name">res.state.ept.window</field>
+        <field name="name">States</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_mode">tree,form</field>
         <field name="search_view_id" ref="view_res_state_ept_filter" />

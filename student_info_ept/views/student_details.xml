@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_student_ept_tree" model="ir.ui.view">
+        <field name="name">student.ept.tree</field>
+        <field name="model">student.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Students">
+                <field name="name" />
+                <field name="student_class" />
+                <field name="birthdate" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_student_ept_form" model="ir.ui.view">
+        <field name="name">student.ept.from</field>
+        <field name="model">student.ept</field>
+        <field name="arch" type="xml">
+            <form string="Student">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="student_class" />
+                        </group>
+                        <group>
+                            <field name="birthdate" />
+                        </group>
+                    </group>
+                    <group>
+                        <notebook>
+                            <page string="Courses" name="student_ept_courses">
+                                <field name="course_ids">
+                                    <tree string="Courses">
+                                        <field name="name" />
+                                    </tree>
+                                    <form string="Course">
+                                        <group>
+                                            <field name="name" />
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_student_ept_filter" model="ir.ui.view">
+        <field name="name">student.ept.search</field>
+        <field name="model">student.ept</field>
+        <field name="arch" type="xml">
+            <search string="Search Student">
+                <field name="name" />
+                <field name="student_class" />
+                <group expand="0" string="Group By">
+                    <filter name="student_ept_class_filter" string="Class" context="{'group_by': 'student_class'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_student_ept_window" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_student_ept_filter" />
+        <field name="res_model">student.ept</field>
+        <field name="help" type="html">
+            <p>Opps, There are no record available to show!</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_student_ept_root"
+              name="Student Info"
+              />
+
+    <menuitem id="menu_student_ept_sub1"
+              name="Student Details"
+              parent="menu_student_ept_root"
+              />
+
+    <menuitem id="menu_student_ept_students"
+              name="Students"
+              parent="menu_student_ept_sub1"
+              action="action_student_ept_window"
+              />
+</odoo>

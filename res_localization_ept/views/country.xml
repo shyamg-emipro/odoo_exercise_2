@@ -32,6 +32,23 @@
                                         <field name="name" />
                                         <field name="code" />
                                     </tree>
+                                    <form string="State">
+                                        <group>
+                                            <field name="name" />
+                                            <field name="code" />
+                                        </group>
+                                        <group>
+                                            <notebook>
+                                                <page string="Cities" name="res.country.ept.cities">
+                                                    <field name="cities">
+                                                        <tree string="Cities" editable="top">
+                                                            <field name="name" />
+                                                        </tree>
+                                                    </field>
+                                                </page>
+                                            </notebook>
+                                        </group>
+                                    </form>
                                 </field>
                             </page>
                         </notebook>

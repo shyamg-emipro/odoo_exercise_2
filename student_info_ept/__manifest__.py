@@ -5,7 +5,7 @@
         Requirement 2
     """,
     'depends': ['base'],
-    'data': ['security/ir.model.access.csv'],
+    'data': ['security/ir.model.access.csv', 'views/student_details.xml', 'views/course_details.xml'],
     'demo': [],
     'installable': True,
     'application': True,
