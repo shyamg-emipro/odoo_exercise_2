@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_product_category_ept_tree" model="ir.ui.view">
+        <field name="name">product.category.ept.tree</field>
+        <field name="model">product.category.ept</field>
+        <field name="arch" type="xml">
+            <tree editable="top" string="Product Categories">
+                <field name="name" />
+                <field name="parent_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_product_category_ept_filter" model="ir.ui.view">
+        <field name="name">product.category.ept.search</field>
+        <field name="model">product.category.ept</field>
+        <field name="arch" type="xml">
+            <search string="Search Category">
+                <field name="name" />
+                <field name="parent_id" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_product_category_ept_window" model="ir.actions.act_window">
+        <field name="name">Product Categories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="view_product_category_ept_filter" />
+        <field name="res_model">product.category.ept</field>
+        <field name="help" type="html">
+            <p>Opps, there are no Product Categories available to show!</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_product_category_ept_root"
+              name="My Sales"
+              />
+
+    <menuitem id="menu_product_category_ept_sub1"
+              name="Category"
+              parent="menu_product_category_ept_root"
+              />
+    <menuitem id="menu_product_category_ept"
+              name="Product Category"
+              parent="menu_product_category_ept_sub1"
+              action="action_product_category_ept_window"
+              />
+</odoo>

@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_user1,User: Sales Person 1 ,model_product_category_ept,group_sale_salesperson,1,1,1,1
+access_sale_manager1,User: Sales Manager 1,model_product_category_ept,group_sale_manager,1,1,1,1
+access_sale_user2,User: Sales Person 2,model_product_ept,group_sale_salesperson,1,1,1,1
+access_sale_manager2,User: Sales Manager 2,model_product_ept,group_sale_manager,1,1,1,1
+access_sale_user3,User: Sales Person 3,model_product_uom_category_ept,group_sale_salesperson,1,1,1,1
+access_sale_manager3,User: Sales Manager 3,model_product_uom_category_ept,group_sale_manager,1,1,1,1
+access_sale_user4,User: Sales Person 4,model_product_uom_ept,group_sale_salesperson,1,1,1,1
+access_sale_manager4,User: Sales Manager 4,model_product_uom_ept,group_sale_manager,1,1,1,1
+access_sale_user5,User: Sales Person 5,model_res_partner_ept,group_sale_salesperson,1,1,1,1
+access_sale_manager5,User: Sales Manager 5,model_res_partner_ept,group_sale_manager,1,1,1,1
+access_sale_user6,User: Sales Person 6,model_sale_order_ept,group_sale_salesperson,1,1,1,1
+access_sale_manager6,User: Sales Manager 6,model_sale_order_ept,group_sale_manager,1,1,1,1
+access_sale_user7,User: Sales Person 7,model_sale_order_line_ept,group_sale_salesperson,1,1,1,1
+access_sale_manager7,User: Sales Manager 7,model_sale_order_line_ept,group_sale_manager,1,1,1,1

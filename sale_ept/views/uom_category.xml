@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_product_uom_category_ept_tree" model="ir.ui.view">
+        <field name="name">product.uom.category.ept.tree</field>
+        <field name="model">product.uom.category.ept</field>
+        <field name="arch" type="xml">
+            <tree string="UOM Categories">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_product_uom_category_ept_form" model="ir.ui.view">
+        <field name="name">product.uom.category.ept.form</field>
+        <field name="model">product.uom.category.ept</field>
+        <field name="arch" type="xml">
+            <form string="UOM Category">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                        </group>
+                    </group>
+                    <group>
+                        <notebook>
+                            <page name="product_uom_category_ept_p1" string="Unit Of Measures">
+                                <field name="uom_ids">
+                                    <tree string="UOMs">
+                                        <field name="name" />
+                                    </tree>
+                                    <from string="UOMs">
+                                        <field name="name" />
+                                    </from>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_product_uom_category_ept_filter" model="ir.ui.view">
+        <field name="name">product.uom.category.ept.search</field>
+        <field name="model">product.uom.category.ept</field>
+        <field name="arch" type="xml">
+            <search string="Search UOM Category">
+                <field name="name" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_product_uom_category_ept_window" model="ir.actions.act_window">
+        <field name="name">Unit Of Measures Categories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_product_uom_category_ept_filter" />
+        <field name="res_model">product.uom.category.ept</field>
+        <field name="help" type="html">
+            <p>Opps, There are not UOM Categories available to show!</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_product_uom_category_ept"
+              name="UOM Categories"
+              parent="menu_product_ept_sales"
+              action="action_product_uom_category_ept_window"
+              />
+</odoo>

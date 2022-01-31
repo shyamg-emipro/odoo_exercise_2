@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_product_ept_tree" model="ir.ui.view">
+        <field name="name">product.ept.tree</field>
+        <field name="model">product.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Products">
+                <field name="name" />
+                <field name="sku" />
+                <field name="product_type" />
+                <field name="sale_price" />
+                <field name="cost_price" />
+                <field name="category_id" />
+                <field name="uom_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_product_ept_form" model="ir.ui.view">
+        <field name="name">product.ept.form</field>
+        <field name="model">product.ept</field>
+        <field name="arch" type="xml">
+            <form string="Product">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="sku" />
+                            <field name="weight" />
+                            <field name="length" />
+                            <field name="volume" />
+                            <field name="width" />
+                        </group>
+                        <group>
+                            <field name="barcode" />
+                            <field name="product_type" />
+                            <field name="sale_price" />
+                            <field name="cost_price" />
+                            <field name="category_id" />
+                            <field name="uom_id" />
+                        </group>
+                    </group>
+                    <group>
+                        <notebook>
+                            <page name="product_ept_p1" string="Description">
+                                <field name="description" />
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_product_ept_filter" model="ir.ui.view">
+        <field name="name">product.ept.search</field>
+        <field name="model">product.ept</field>
+        <field name="arch" type="xml">
+            <search string="Search Product">
+                <field name="name" />
+                <field name="sku" />
+                <field name="barcode" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_product_ept_window" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_product_ept_filter" />
+        <field name="res_model">product.ept</field>
+        <field name="help" type="html">
+            <p>Opps, There are no products available to show!</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_product_ept_sales"
+              name="Sales"
+              parent="menu_product_category_ept_root"
+              />
+
+    <menuitem id="menu_product_ept"
+              name="Products"
+              parent="menu_product_ept_sales"
+              action="action_product_ept_window"
+              />
+</odoo>

@@ -17,7 +17,7 @@
                 <field name="manager_id" />
                 <field name="related_user" />
                 <field name="employees" />
-<!--                <field name="increment" groups="employee_ept.group_employee_manager"/>-->
+                <field name="increment" />
             </tree>
         </field>
     </record>
@@ -35,7 +35,7 @@
                             <field name="department_id" />
                             <field name="shift_id" />
                             <field name="gender" />
-                            <field name="is_manager" />
+                            <field name="is_manager" groups="employee_mgmt_ept.group_employee_manager" />
                         </group>
                         <group>
                             <field name="job_position" />
@@ -43,6 +43,7 @@
                             <field name="hire_date" />
                             <field name="job_type" />
                             <field name="manager_id" />
+                            <field name="increment" />
                         </group>
                     </group>
                     <group>

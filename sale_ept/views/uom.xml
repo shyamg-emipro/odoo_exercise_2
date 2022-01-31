@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_product_uom_ept_tree" model="ir.ui.view">
+        <field name="name">product.uom.ept.tree</field>
+        <field name="model">product.uom.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Product UOMs">
+                <field name="name" />
+                <field name="uom_category_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_product_uom_ept_form" model="ir.ui.view">
+        <field name="name">product.uom.ept.form</field>
+        <field name="model">product.uom.ept</field>
+        <field name="arch" type="xml">
+            <form string="Product UOM">
+                <group>
+                    <group>
+                        <field name="name" />
+                        <field name="uom_category_id" />
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_product_uom_ept_filter" model="ir.ui.view">
+        <field name="name">product.uom.ept.search</field>
+        <field name="model">product.uom.ept</field>
+        <field name="arch" type="xml">
+            <search string="Search UOM">
+                <field name="name" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_product_uom_ept_window" model="ir.actions.act_window">
+        <field name="name">Unit of mesures</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_product_uom_ept_filter" />
+        <field name="res_model">product.uom.ept</field>
+        <field name="help" type="html">
+            <p>Opps, There are no UOM available to show!</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_product_uom_ept"
+              name="UOM"
+              parent="menu_product_ept_sales"
+              action="action_product_uom_ept_window"
+              />
+</odoo>

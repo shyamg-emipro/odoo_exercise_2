@@ -21,4 +21,4 @@ class Employee(models.Model):
     manager_id = fields.Many2one(comodel_name="employee.ept", string="Manager", help="Manager of the group of employees")
     related_user = fields.Many2one(comodel_name="res.users", string="User", help="User of the employee")
     employees = fields.One2many(comodel_name="employee.ept", readonly=True, inverse_name="manager_id", string="Employees", help="Employees of current user manager")
-    increment = fields.Float(string="Increment", help="Increment of the employee", digits=(4, 2))
+    increment = fields.Float(string="Increment", help="Increment of the employee", digits=(4, 2), groups="employee_mgmt_ept.group_employee_manager")

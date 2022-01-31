@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_res_partner_ept_tree" model="ir.ui.view">
+        <field name="name">res.partner.ept.tree</field>
+        <field name="model">res.partner.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Customers">
+                <field name="name" />
+                <field name="email" />
+                <field name="mobile" />
+                <field name="address_type" />
+                <field name="city" />
+                <field name="state" />
+                <field name="country" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_res_partner_ept_from" model="ir.ui.view">
+        <field name="name">res.partner.ept.from</field>
+        <field name="model">res.partner.ept</field>
+        <field name="arch" type="xml">
+            <form string="Customer">
+                <sheet>
+                    <group>
+                        <field name="photo" widget="image" class="oe_avatar" />
+                    </group>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="street1" />
+                            <field name="street2" />
+                            <field name="country" />
+                            <field name="state" />
+                            <field name="city" />
+                            <field name="zip_code" />
+                        </group>
+                        <group>
+                            <field name="email" />
+                            <field name="mobile" />
+                            <field name="phone" />
+                            <field name="website" />
+                            <field name="active" />
+                            <field name="parent_id" />
+                            <field name="address_type" />
+                        </group>
+                    </group>
+                    <group>
+                        <notebook>
+                            <page name="res_partner_ept_p1" string="Customers">
+                                <field name="child_ids">
+                                    <kanban>
+                                        <field name="photo" />
+                                        <field name="name" />
+                                        <field name="email" />
+                                        <field name="mobile" />
+                                        <field name="city" />
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div class="oe_kanban_global_click">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <span>
+                                                                <field name="photo" widget="image" class="oe_avatar" />
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <div>
+                                                                <strong>Name: </strong>
+                                                                <field name="name" />
+                                                            </div>
+                                                            <div>
+                                                                <strong>Email: </strong>
+                                                                <field name="email" />
+                                                            </div>
+                                                            <div>
+                                                                <strong>Mobile: </strong>
+                                                                <field name="mobile" />
+                                                            </div>
+                                                            <div>
+                                                                <strong>City: </strong>
+                                                                <field name="city" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form string="Customer">
+                                        <group>
+                                            <field name="photo" widget="image" class="oe_avatar" />
+                                        </group>
+                                        <group>
+                                            <group>
+                                                <field name="name" />
+                                                <field name="street1" />
+                                                <field name="street2" />
+                                                <field name="country" />
+                                                <field name="state" />
+                                                <field name="city" />
+                                            </group>
+                                            <group>
+                                                <field name="zip_code" />
+                                                <field name="email" />
+                                                <field name="mobile" />
+                                                <field name="phone" />
+                                                <field name="website" />
+                                                <field name="active" />
+                                                <field name="address_type" />
+                                            </group>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_res_partner_ept_filter" model="ir.ui.view">
+        <field name="name">res.partner.ept.search</field>
+        <field name="model">res.partner.ept</field>
+        <field name="arch" type="xml">
+            <search string="Search Customer">
+                <field name="name" />
+                <field name="country" />
+                <field name="state" />
+                <field name="email" />
+                <group expand="0" string="Group By">
+                    <filter name="res_partner_ept_country" string="Country" context="{'group_by': 'country'}" />
+                    <filter name="res_partner_ept_state" string="State" context="{'group_by': 'state'}" />
+                    <filter name="res_partner_ept_city" string="City" context="{'group_by': 'city'}" />
+                </group>
+                <filter name="res_partner_ept_archived" string="Archived" domain="[('active', '=', False)]" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_res_partner_ept_window" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_res_partner_ept_filter" />
+        <field name="domain">[('parent_id', '=', False)]</field>
+        <field name="res_model">res.partner.ept</field>
+        <field name="help" type="html">
+            <p>Opps, There are no Customers available to show!</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_res_partner_ept"
+              name="Customers"
+              parent="menu_product_ept_sales"
+              action="action_res_partner_ept_window"
+              />
+</odoo>
