@@ -5,13 +5,13 @@
         <field name="model">res.partner.ept</field>
         <field name="arch" type="xml">
             <tree string="Customers">
-                <field name="name" />
-                <field name="email" />
-                <field name="mobile" />
-                <field name="address_type" />
-                <field name="city" />
-                <field name="state" />
-                <field name="country" />
+                <field name="name"/>
+                <field name="email"/>
+                <field name="mobile"/>
+                <field name="address_type"/>
+                <field name="city"/>
+                <field name="state"/>
+                <field name="country"/>
             </tree>
         </field>
     </record>
@@ -21,28 +21,31 @@
         <field name="model">res.partner.ept</field>
         <field name="arch" type="xml">
             <form string="Customer">
+                <header>
+                    <button name="create_new_country" string="Create New Country" type="object" />
+                </header>
                 <sheet>
                     <group>
-                        <field name="photo" widget="image" class="oe_avatar" />
+                        <field name="photo" widget="image" class="oe_avatar"/>
                     </group>
                     <group>
                         <group>
-                            <field name="name" />
-                            <field name="street1" />
-                            <field name="street2" />
-                            <field name="country" />
-                            <field name="state" />
-                            <field name="city" />
-                            <field name="zip_code" />
+                            <field name="name"/>
+                            <field name="street1"/>
+                            <field name="street2"/>
+                            <field name="country"/>
+                            <field name="state"/>
+                            <field name="city"/>
+                            <field name="zip_code"/>
                         </group>
                         <group>
-                            <field name="email" />
-                            <field name="mobile" />
-                            <field name="phone" />
-                            <field name="website" />
-                            <field name="active" />
-                            <field name="parent_id" />
-                            <field name="address_type" />
+                            <field name="email"/>
+                            <field name="mobile"/>
+                            <field name="phone"/>
+                            <field name="website"/>
+                            <field name="active"/>
+                            <field name="parent_id"/>
+                            <field name="address_type" widget="radio" />
                         </group>
                     </group>
                     <group>
@@ -50,36 +53,36 @@
                             <page name="res_partner_ept_p1" string="Customers">
                                 <field name="child_ids">
                                     <kanban>
-                                        <field name="photo" />
-                                        <field name="name" />
-                                        <field name="email" />
-                                        <field name="mobile" />
-                                        <field name="city" />
+                                        <field name="photo"/>
+                                        <field name="name"/>
+                                        <field name="email"/>
+                                        <field name="mobile"/>
+                                        <field name="city"/>
                                         <templates>
                                             <t t-name="kanban-box">
                                                 <div class="oe_kanban_global_click">
                                                     <div class="row">
                                                         <div class="col-4">
                                                             <span>
-                                                                <field name="photo" widget="image" class="oe_avatar" />
+                                                                <field name="photo" widget="image" class="oe_avatar"/>
                                                             </span>
                                                         </div>
                                                         <div class="col-8">
                                                             <div>
-                                                                <strong>Name: </strong>
-                                                                <field name="name" />
+                                                                <strong>Name:</strong>
+                                                                <field name="name"/>
                                                             </div>
                                                             <div>
-                                                                <strong>Email: </strong>
-                                                                <field name="email" />
+                                                                <strong>Email:</strong>
+                                                                <field name="email"/>
                                                             </div>
                                                             <div>
-                                                                <strong>Mobile: </strong>
-                                                                <field name="mobile" />
+                                                                <strong>Mobile:</strong>
+                                                                <field name="mobile"/>
                                                             </div>
                                                             <div>
-                                                                <strong>City: </strong>
-                                                                <field name="city" />
+                                                                <strong>City:</strong>
+                                                                <field name="city"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -89,25 +92,25 @@
                                     </kanban>
                                     <form string="Customer">
                                         <group>
-                                            <field name="photo" widget="image" class="oe_avatar" />
+                                            <field name="photo" widget="image" class="oe_avatar"/>
                                         </group>
                                         <group>
                                             <group>
-                                                <field name="name" />
-                                                <field name="street1" />
-                                                <field name="street2" />
-                                                <field name="country" />
-                                                <field name="state" />
-                                                <field name="city" />
+                                                <field name="name"/>
+                                                <field name="street1"/>
+                                                <field name="street2"/>
+                                                <field name="country"/>
+                                                <field name="state"/>
+                                                <field name="city"/>
                                             </group>
                                             <group>
-                                                <field name="zip_code" />
-                                                <field name="email" />
-                                                <field name="mobile" />
-                                                <field name="phone" />
-                                                <field name="website" />
-                                                <field name="active" />
-                                                <field name="address_type" />
+                                                <field name="zip_code"/>
+                                                <field name="email"/>
+                                                <field name="mobile"/>
+                                                <field name="phone"/>
+                                                <field name="website"/>
+                                                <field name="active"/>
+                                                <field name="address_type" widget="radio"/>
                                             </group>
                                         </group>
                                     </form>
@@ -125,16 +128,16 @@
         <field name="model">res.partner.ept</field>
         <field name="arch" type="xml">
             <search string="Search Customer">
-                <field name="name" />
-                <field name="country" />
-                <field name="state" />
-                <field name="email" />
+                <field name="name"/>
+                <field name="country"/>
+                <field name="state"/>
+                <field name="email"/>
                 <group expand="0" string="Group By">
-                    <filter name="res_partner_ept_country" string="Country" context="{'group_by': 'country'}" />
-                    <filter name="res_partner_ept_state" string="State" context="{'group_by': 'state'}" />
-                    <filter name="res_partner_ept_city" string="City" context="{'group_by': 'city'}" />
+                    <filter name="res_partner_ept_country" string="Country" context="{'group_by': 'country'}"/>
+                    <filter name="res_partner_ept_state" string="State" context="{'group_by': 'state'}"/>
+                    <filter name="res_partner_ept_city" string="City" context="{'group_by': 'city'}"/>
                 </group>
-                <filter name="res_partner_ept_archived" string="Archived" domain="[('active', '=', False)]" />
+                <filter name="res_partner_ept_archived" string="Archived" domain="[('active', '=', False)]"/>
             </search>
         </field>
     </record>
@@ -143,7 +146,7 @@
         <field name="name">Customers</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_mode">tree,form</field>
-        <field name="search_view_id" ref="view_res_partner_ept_filter" />
+        <field name="search_view_id" ref="view_res_partner_ept_filter"/>
         <field name="domain">[('parent_id', '=', False)]</field>
         <field name="res_model">res.partner.ept</field>
         <field name="help" type="html">
@@ -155,5 +158,5 @@
               name="Customers"
               parent="menu_product_ept_sales"
               action="action_res_partner_ept_window"
-              />
+    />
 </odoo>
