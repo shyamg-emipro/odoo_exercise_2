@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class SaleOrderLine(models.Model):
@@ -14,3 +14,15 @@ class SaleOrderLine(models.Model):
                              selection=[('Draft', 'Draft'), ('Confirmed', 'Confirmed'), ('Cancelled', 'Cancelled')])
     uom_id = fields.Many2one(string="UOM", help="Unit of measure of the product",
                              comodel_name="product.uom.ept")
+    subtotal_without_tax = fields.Float(string="Sub Total", help="Sub total of the order line",
+                                        compute="calculate_subtotal", store=True)
+
+    @api.onchange('product_id')
+    def onchange_product_id(self):
+        self.quantity = 1
+        self.unit_price = self.product_id.sale_price
+
+    @api.depends('quantity', 'unit_price')
+    def calculate_subtotal(self):
+        for line in self:
+            line.subtotal_without_tax = line.quantity * line.unit_price

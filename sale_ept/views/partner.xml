@@ -22,7 +22,8 @@
         <field name="arch" type="xml">
             <form string="Customer">
                 <header>
-                    <button name="create_new_country" string="Create New Country" type="object" />
+<!--                    Below Code is used to Learn about ORM methods-->
+<!--                    <button name="create_new_country" string="Create New Country" type="object" />-->
                 </header>
                 <sheet>
                     <group>

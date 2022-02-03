@@ -13,3 +13,9 @@ access_sale_user6,User: Sales Person 6,model_sale_order_ept,group_sale_salespers
 access_sale_manager6,User: Sales Manager 6,model_sale_order_ept,group_sale_manager,1,1,1,1
 access_sale_user7,User: Sales Person 7,model_sale_order_line_ept,group_sale_salesperson,1,1,1,1
 access_sale_manager7,User: Sales Manager 7,model_sale_order_line_ept,group_sale_manager,1,1,1,1
+access_sale_user8,User: Sales Person 8,model_crm_team_ept,group_sale_salesperson,1,1,1,1
+access_sale_manager8,User: Sales Manager 8,model_crm_team_ept,group_sale_manager,1,1,1,1
+access_sale_user9,User: Sales Person 9,model_crm_lead_ept,group_sale_salesperson,1,1,1,1
+access_sale_manager9,User: Sales Manager 9,model_crm_lead_ept,group_sale_manager,1,1,1,1
+access_sale_user10,User: Sales Person 10,model_crm_lead_line_ept,group_sale_salesperson,1,1,1,1
+access_sale_manager10,User: Sales Manager 10,model_crm_lead_line_ept,group_sale_manager,1,1,1,1

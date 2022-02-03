@@ -10,6 +10,9 @@
                 <field name="date" />
                 <field name="salesperson" />
                 <field name="state" />
+                <field name="total_weight" />
+                <field name="total_volume" />
+                <field name="order_total" />
             </tree>
         </field>
     </record>
@@ -45,6 +48,7 @@
                                         <field name="unit_price" />
                                         <field name="state" />
                                         <field name="uom_id" />
+                                        <field name="subtotal_without_tax" />
                                     </tree>
                                     <form string="Order Line">
                                         <header>

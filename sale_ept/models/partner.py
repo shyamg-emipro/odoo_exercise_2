@@ -25,26 +25,18 @@ class Partner(models.Model):
                                     help="Address type of the partner",
                                     selection=[('Invoice', 'Invoice'), ('Shipping', 'Shipping'), ('Contact', 'Contact')])
 
-    def create_new_country(self):
-        country = self.country
-        new = country.create({'name': 'Germany', 'code': 'DE'})
-        print(new)
-        state = self.state.create({"name": "Berlin", "code": "BR", "country_id": new.id})
-        print(state)
-
-    def write(self, vals):
-        print(self)
-        print(vals)
-        return super(Partner, self).write(vals)
-
-    # def name_get(self):
-    #     data = []
-    #     for country in self.country:
-    #         data.append((
-    #             country.id,
-    #             country.name + " - " + country.code
-    #         ))
-    #     return data
+    # Code Below is used to understand the Odoo ORM Methods
+    # def create_new_country(self):
+    #     country = self.country
+    #     new = country.create({'name': 'Germany', 'code': 'DE'})
+    #     print(new)
+    #     state = self.state.create({"name": "Berlin", "code": "BR", "country_id": new.id})
+    #     print(state)
+    #
+    # def write(self, vals):
+    #     print(self)
+    #     print(vals)
+    #     return super(Partner, self).write(vals)
 
     def unlink(self):
         if self.child_ids:
