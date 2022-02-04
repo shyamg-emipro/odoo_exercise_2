@@ -23,7 +23,7 @@
         <field name="arch" type="xml">
             <form string="Sales Order">
                 <header>
-                    <field name="state" />
+                    <field name="state" widget="statusbar" clickable="true" />
                 </header>
                 <sheet>
                     <group>
@@ -52,7 +52,7 @@
                                     </tree>
                                     <form string="Order Line">
                                         <header>
-                                            <field name="state" />
+                                            <field name="state" widget="statusbar" clickable="true" />
                                         </header>
                                         <sheet>
                                             <group>

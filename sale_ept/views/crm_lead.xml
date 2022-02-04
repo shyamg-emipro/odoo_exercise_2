@@ -23,7 +23,12 @@
                     <field name="state" widget="statusbar" clickable="False"/>
                 </header>
                 <header>
-                    <button name="change_state_to_qualified" string="Qualified" type="object" />
+                    <button name="change_state_to_qualified" attrs="{'invisible': [('state', '!=', 'New')]}" string="Qualified" type="object" />
+                    <button name="change_state_to_proposition" attrs="{'invisible': [('state', '!=', 'Qualified')]}" string="Proposition" type="object" />
+                    <button name="change_state_to_won" attrs="{'invisible': [('state', '!=', 'Proposition')]}" string="Won" type="object" />
+                    <button name="change_state_to_lost" attrs="{'invisible': [('state', '!=', 'Proposition')]}" string="Lost" type="object" />
+                    <button name="generate_sales_quotation" attrs="{'invisible': [('state', '!=', 'Won')]}" string="Generate Sales Quotation" type="object" />
+                    <button name="generate_customer" attrs="{'invisible': [('state', '!=', 'Won')]}" string="Generate Customer" type="object" />
                 </header>
                 <sheet>
                     <group>
@@ -55,7 +60,7 @@
                                             </group>
                                             <group>
                                                 <field name="uom_id"/>
-                                                <field name="lead_id"/>
+                                                <field name="lead_id" readonly="True"/>
                                             </group>
                                         </group>
                                         <group>

@@ -5,7 +5,7 @@ class SaleOrder(models.Model):
     _name = "sale.order.ept"
     _description = "Sale Order"
 
-    order_no = fields.Char(string="Order No", help="Order Number", required=True)
+    order_no = fields.Char(string="Order No", help="Order Number", readonly=True)
     partner_id = fields.Many2one(string="Partner", comodel_name="res.partner.ept", help="Partner who placed this order")
     partner_invoice_id = fields.Many2one(string="Invoice Address", comodel_name="res.partner.ept",
                                          help="Partner who's address type is Invoice")
@@ -15,13 +15,14 @@ class SaleOrder(models.Model):
     order_lines = fields.One2many(string="Order Lines",
                                   help="Order Lines of the current order",
                                   comodel_name="sale.order.line.ept",
-                                  inverse_name="order_no")
+                                  inverse_name="order_id")
     salesperson = fields.Many2one(string="Sales Person", help="Sales person who negotiated this order",
                                   comodel_name="res.users")
     state = fields.Selection(string="State",
                              help="State of the order",
                              selection=[('Draft', 'Draft'), ('Confirmed', 'Confirmed'), ('Done', 'Done'),
-                                        ('Cancelled', 'Cancelled')])
+                                        ('Cancelled', 'Cancelled')],
+                             default="Draft")
     total_weight = fields.Float(string="Total Weight", help="Total Weight of the order", digits=(8, 2),
                                 compute="calculate_total_weight")
     total_volume = fields.Float(string="Total Volume", help="Total Volume of the order", digits=(8, 2),
@@ -29,6 +30,12 @@ class SaleOrder(models.Model):
     order_total = fields.Float(string="Order Total", help="Total amount of the order", compute="calculate_order_total",
                                store=True)
     lead_id = fields.Many2one(comodel_name="crm.lead.ept", string="Lead", help="Lead details of this order")
+
+    @api.model
+    def create(self, vals):
+        order = super(SaleOrder, self).create(vals)
+        order.order_no = "SO" + str(order.id)
+        return order
 
     def calculate_total_weight(self):
         for order in self:
