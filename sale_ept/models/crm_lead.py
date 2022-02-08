@@ -46,25 +46,26 @@ class Lead(models.Model):
         self.state = "Lost"
 
     def generate_sales_quotation(self):
+        order_line_data = []
         values = {'partner_id': self.partner_id}
         temp = self.env['sale.order.ept'].new(values)
         temp.onchange_partner_id()
-        order = self.env['sale.order.ept'].create({
-            'partner_id': self.partner_id.id,
-            'partner_invoice_id': temp.partner_invoice_id.id,
-            'partner_shipping_id': temp.partner_shipping_id.id,
-            'salesperson': self.user_id.id,
-            'lead_id': self.id
-        })
         for line in self.lead_line_ids:
-            self.env['sale.order.line.ept'].create({
-                'order_id': order.id,
+            order_line_data.append((0, 0, {
                 'product_id': line.product_id.id,
                 'name': line.name,
                 'quantity': line.expected_sell_qty,
                 'unit_price': line.product_id.sale_price,
                 'uom_id': line.uom_id.id
-            })
+            }))
+        order = self.env['sale.order.ept'].create({
+            'partner_id': self.partner_id.id,
+            'partner_invoice_id': temp.partner_invoice_id.id,
+            'partner_shipping_id': temp.partner_shipping_id.id,
+            'salesperson': self.user_id.id,
+            'lead_id': self.id,
+            'order_lines': order_line_data
+        })
 
     def generate_customer(self):
         new_partner = self.env['res.partner.ept'].create({

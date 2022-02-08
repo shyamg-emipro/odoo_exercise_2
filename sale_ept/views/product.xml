@@ -12,6 +12,7 @@
                 <field name="cost_price" />
                 <field name="category_id" />
                 <field name="uom_id" />
+<!--                <field name="product_stock"/>-->
             </tree>
         </field>
     </record>
@@ -32,6 +33,7 @@
                             <field name="width" />
                         </group>
                         <group>
+<!--                            <field name="product_stock"/>-->
                             <field name="barcode" />
                             <field name="product_type" />
                             <field name="sale_price" />

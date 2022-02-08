@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_purchase_order_ept_tree" model="ir.ui.view">
+        <field name="name">purchase.order.ept.tree</field>
+        <field name="model">purchase.order.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Purchase Orders">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="warehouse_id"/>
+                <field name="order_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_purchase_order_ept_form" model="ir.ui.view">
+        <field name="name">purchase.order.ept.form</field>
+        <field name="model">purchase.order.ept</field>
+        <field name="arch" type="xml">
+            <form string="Purchase Order">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <header>
+                    <button name="confirm_purchase_order" string="Confirm Order" type="object" attrs="{'invisible': [('state', '!=', 'Draft')]}"/>
+                    <button name="cancel_purchase_order" string="Cancel Order" type="object" attrs="{'invisible': ['|', ('state', '=', 'Done'), ('state', '=', 'Cancelled')]}"/>
+                    <button name="draft_purchase_order" string="Revive the Order" type="object" attrs="{'invisible': [('state', '!=', 'Cancelled')]}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="partner_id"/>
+
+                        </group>
+                        <group>
+                            <field name="warehouse_id"/>
+                            <field name="order_date"/>
+                        </group>
+                    </group>
+                    <group>
+                        <notebook>
+                            <page name="purchase_order_ept_p1" string="Purchase Order Lines">
+                                <field name="purchase_order_line_ids">
+                                    <tree string="Purchase Order Lines">
+                                        <field name="name"/>
+                                        <field name="product_id"/>
+                                        <field name="uom_id"/>
+                                        <field name="quantity"/>
+                                        <field name="cost_price"/>
+                                        <field name="state"/>
+                                    </tree>
+                                    <form string="Purchase Order Line">
+                                        <header>
+                                            <field name="state" widget="statusbar"/>
+                                        </header>
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="product_id"/>
+                                                    <field name="quantity"/>
+                                                </group>
+                                                <group>
+                                                    <field name="cost_price"/>
+                                                    <field name="uom_id"/>
+                                                </group>
+                                            </group>
+                                            <group>
+                                                <notebook>
+                                                    <page name="purchase_order_ept_p2" string="Description">
+                                                        <field name="name"/>
+                                                    </page>
+                                                </notebook>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_purchase_order_ept_filter" model="ir.ui.view">
+        <field name="name">purchase.order.ept.search</field>
+        <field name="model">purchase.order.ept</field>
+        <field name="arch" type="xml">
+            <search string="Search Purchase Order">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_purchase_order_ept_window" model="ir.actions.act_window">
+        <field name="name">Purchase Orders</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_purchase_order_ept_filter" />
+        <field name="res_model">purchase.order.ept</field>
+        <field name="help" type="html">
+            <p>Opps, There are no purchase order records available to show!</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_purchase_order_ept_sub1"
+              name="Purchase"
+              parent="menu_product_category_ept_root"
+              />
+    <menuitem id="menu_purchase_order_ept"
+              name="Orders"
+              parent="menu_purchase_order_ept_sub1"
+              action="action_purchase_order_ept_window"
+              />
+</odoo>

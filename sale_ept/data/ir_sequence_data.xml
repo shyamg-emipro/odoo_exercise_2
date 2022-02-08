@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_sale_order_ept" model="ir.sequence">
+            <field name="name">Sale Order Ept</field>
+            <field name="code">sale.order.ept</field>
+            <field name="prefix">SO</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+        <record id="seq_purchase_order_ept" model="ir.sequence">
+            <field name="name">Purchase Order Ept</field>
+            <field name="code">purchase.order.ept</field>
+            <field name="prefix">PO</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+        <record id="seq_stock_picking_ept_sale" model="ir.sequence">
+            <field name="name">Delivery Order</field>
+            <field name="code">delivery.order.ept</field>
+            <field name="prefix">DO</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+        <record id="seq_stock_picking_ept_purchase" model="ir.sequence">
+            <field name="name">Incoming Shipment</field>
+            <field name="code">incoming.shipment.ept</field>
+            <field name="prefix">IS</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False" />
+        </record>
+    </data>
+</odoo>

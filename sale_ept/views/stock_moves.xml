@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_stock_move_ept_tree" model="ir.ui.view">
+        <field name="name">stock.move.ept.tree</field>
+        <field name="model">stock.move.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Stock Moves">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="uom_id"/>
+                <field name="source_location_id"/>
+                <field name="destination_location_id"/>
+                <field name="qty_to_deliver"/>
+                <field name="qty_done"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_stock_move_ept_window" model="ir.actions.act_window">
+        <field name="name">Stock Moves</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="res_model">stock.move.ept</field>
+        <field name="help" type="html">
+            <p>Opps, There are no records in stock moves!</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_stock_move_ept"
+              name="Stock Moves"
+              parent="menu_stock_warehouse_ept_sub1"
+              action="action_stock_move_ept_window"
+              />
+</odoo>

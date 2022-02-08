@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class Product(models.Model):
@@ -30,3 +30,15 @@ class Product(models.Model):
                              help="Product Unit of measure",
                              comodel_name="product.uom.ept")
     description = fields.Text(string="Description", help="Description about the product")
+    product_stock = fields.Float(string="Stock", help="Available Product Stock", compute="product_stock")
+
+    @api.depends('sku')
+    def product_stock(self):
+        product_move = self.env['stock.move.ept'].search([('product_id', '=', self.id)])
+        stock = 0
+        for product in product_move:
+            if product.picking_id.transaction_type == "In":
+                stock += product.qty_done
+            elif product.picking_id.transaction_type == "Out":
+                stock -= product.qty_done
+        self.product_stock = stock

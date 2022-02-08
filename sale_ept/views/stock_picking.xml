@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_stock_picking_ept_tree" model="ir.ui.view">
+        <field name="name">stock.deliver.order.ept.tree</field>
+        <field name="model">stock.picking.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Stock Pickings">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="state"/>
+                <field name="sale_order_id"/>
+                <field name="purchase_order_id"/>
+                <field name="transaction_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_stock_picking_ept_form" model="ir.ui.view">
+        <field name="name">stock.stock.picking.form</field>
+        <field name="model">stock.picking.ept</field>
+        <field name="arch" type="xml">
+            <form string="Stock Picking">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <header>
+                    <button name="validate" string="Validate" type="object" attrs="{'invisible': [('state', '!=', 'Draft')]}"/>
+                    <button name="cancel_order" string="Cancel Order" type="object" attrs="{'invisible': [('state', '!=', 'Draft')]}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="transaction_type"/>
+                        </group>
+                        <group>
+                            <field name="sale_order_id"/>
+                            <field name="purchase_order_id"/>
+                            <field name="transaction_date"/>
+                        </group>
+                    </group>
+                    <group>
+                        <notebook>
+                            <page name="stock_picking_p1" string="Stock Moves">
+                                <field name="move_ids">
+                                    <tree string="Stock Moves">
+                                        <field name="name"/>
+                                        <field name="product_id"/>
+                                        <field name="uom_id"/>
+                                        <field name="source_location_id"/>
+                                        <field name="destination_location_id"/>
+                                        <field name="qty_to_deliver"/>
+                                        <field name="qty_done"/>
+                                        <field name="state"/>
+                                        <field name="picking_id"/>
+                                    </tree>
+                                    <form>
+                                        <header>
+                                            <field name="state" widget="statusbar"/>
+                                        </header>
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="product_id"/>
+                                                    <field name="uom_id"/>
+                                                    <field name="source_location_id"/>
+                                                    <field name="destination_location_id"/>
+                                                </group>
+                                                <group>
+                                                    <field name="qty_to_deliver"/>
+                                                    <field name="qty_done"/>
+                                                    <field name="picking_id"/>
+                                                </group>
+                                            </group>
+                                            <group>
+                                                <notebook>
+                                                    <page string="Description" name="stock.picking.ept.p2">
+                                                        <field name="name"/>
+                                                    </page>
+                                                </notebook>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_stock_picking_ept_filter" model="ir.ui.view">
+        <field name="name">stock.stock.picking.search</field>
+        <field name="model">stock.picking.ept</field>
+        <field name="arch" type="xml">
+            <search string="Search Delivery Order">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="sale_order_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_stock_picking_ept_out_window" model="ir.actions.act_window">
+        <field name="name">Delivery Orders</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('transaction_type', '=', 'Out')]</field>
+        <field name="search_view_id" ref="view_stock_picking_ept_filter"/>
+        <field name="res_model">stock.picking.ept</field>
+        <field name="help" type="html">
+            <p>Opps, There are no Delivery Orders available to show!</p>
+        </field>
+    </record>
+
+    <record id="action_stock_picking_ept_in_window" model="ir.actions.act_window">
+        <field name="name">Incoming Shipments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('transaction_type', '=', 'In')]</field>
+        <field name="search_view_id" ref="view_stock_picking_ept_filter"/>
+        <field name="res_model">stock.picking.ept</field>
+        <field name="help" type="html">
+            <p>Opps, There are no Incoming Shipments available to show!</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_stock_picking_out_ept"
+              name="Delivery Orders"
+              parent="menu_stock_warehouse_ept_sub1"
+              action="action_stock_picking_ept_out_window"
+              />
+
+    <menuitem id="menu_stock_picking_in_ept"
+              name="Incoming Shipments"
+              parent="menu_stock_warehouse_ept_sub1"
+              action="action_stock_picking_ept_in_window"
+              />
+</odoo>

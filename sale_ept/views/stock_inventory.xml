@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_stock_inventory_ept_tree" model="ir.ui.view">
+        <field name="name">stock.inventory.ept.tree</field>
+        <field name="model">stock.inventory.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Stock Inventories">
+                <field name="name"/>
+                <field name="state"/>
+                <field name="location_id"/>
+                <field name="inventory_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_stock_inventory_ept_form" model="ir.ui.view">
+        <field name="name">stock.inventory.ept.form</field>
+        <field name="model">stock.inventory.ept</field>
+        <field name="arch" type="xml">
+            <form string="Stock Inventory">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <header>
+                    <button string="Start Inventory" name="start_inventory" type="object" attrs="{'invisible': [('state', '!=', 'Draft')]}"/>
+                    <button string="Validate Inventory" name="validate_inventory" type="object" attrs="{'invisible': [('state', '!=', 'In-Progress')]}"/>
+                    <button string="Cancel Inventory" name="cancel_inventory" type="object" attrs="{'invisible': ['|', ('state', '!=', 'Draft'), ('state', '!=', 'In-Progress')]}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="location_id"/>
+                        </group>
+                        <group>
+                            <field name="inventory_date"/>
+                        </group>
+                    </group>
+                    <group>
+                        <notebook>
+                            <page name="stock_inventory_ept_p1" string="Inventory Lines">
+                                <field name="inventory_line_ids">
+                                    <tree string="Inventory Lines" editable="top">
+                                        <field name="product_id"/>
+                                        <field name="available_qty"/>
+                                        <field name="counted_product_qty"/>
+                                        <field name="difference"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_stock_inventory_ept_filter" model="ir.ui.view">
+        <field name="name">stock.inventory.ept.search</field>
+        <field name="model">stock.inventory.ept</field>
+        <field name="arch" type="xml">
+            <search string="Search Inventory">
+                <field name="name"/>
+                <field name="location_id"/>
+                <group string="Group By" expand="0">
+                    <filter name="stock_inventory_ept_state" string="State" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_stock_inventory_ept_window" model="ir.actions.act_window">
+        <field name="name">Inventories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_stock_inventory_ept_filter" />
+        <field name="res_model">stock.inventory.ept</field>
+        <field name="help" type="html">
+            <p>Opps, There are no Inventories available to show!</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_stock_inventory_ept"
+              name="Inventories"
+              parent="menu_stock_warehouse_ept_root"
+              action="action_stock_inventory_ept_window"
+              />
+</odoo>

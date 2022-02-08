@@ -19,3 +19,19 @@ access_sale_user9,User: Sales Person 9,model_crm_lead_ept,group_sale_salesperson
 access_sale_manager9,User: Sales Manager 9,model_crm_lead_ept,group_sale_manager,1,1,1,1
 access_sale_user10,User: Sales Person 10,model_crm_lead_line_ept,group_sale_salesperson,1,1,1,1
 access_sale_manager10,User: Sales Manager 10,model_crm_lead_line_ept,group_sale_manager,1,1,1,1
+access_warehouse_worker1,User: Warehouse Worker 1,model_stock_warehouse_ept,group_sale_salesperson,1,1,1,1
+access_warehouse_manager1,User: Warehouse Manager 1,model_stock_warehouse_ept,group_sale_manager,1,1,1,1
+access_warehouse_worker2,User: Warehouse Worker 2,model_stock_location_ept,group_sale_salesperson,1,1,1,1
+access_warehouse_manager2,User: Warehouse Manager 2,model_stock_location_ept,group_sale_manager,1,1,1,1
+access_warehouse_worker3,User: Warehouse Worker 3,model_stock_picking_ept,group_sale_salesperson,1,1,1,1
+access_warehouse_manager3,User: Warehouse Manager 3,model_stock_picking_ept,group_sale_manager,1,1,1,1
+access_warehouse_worker4,User: Warehouse Worker 4,model_stock_move_ept,group_sale_salesperson,1,1,1,1
+access_warehouse_manager4,User: Warehouse Manager 4,model_stock_move_ept,group_sale_manager,1,1,1,1
+access_purchase_user1,User: Purchase User 1,model_purchase_order_ept,group_sale_salesperson,1,1,1,1
+access_purchase_manager1,User: Purchase Manager 1,model_purchase_order_ept,group_sale_manager,1,1,1,1
+access_purchase_user2,User: Purchase User 2,model_purchase_order_line_ept,group_sale_salesperson,1,1,1,1
+access_purchase_manager2,User: Purchase Manager 2,model_purchase_order_line_ept,group_sale_manager,1,1,1,1
+access_inventory_user,User: Inventory User,model_stock_inventory_ept,group_sale_salesperson,1,1,1,1
+access_inventory_manager,User: Inventory Manager,model_stock_inventory_ept,group_sale_manager,1,1,1,1
+access_inventory_user2,User: Inventory User 2,model_stock_inventory_line_ept,group_sale_salesperson,1,1,1,1
+access_inventory_manager2,User: Inventory Manager 2,model_stock_inventory_line_ept,group_sale_manager,1,1,1,1

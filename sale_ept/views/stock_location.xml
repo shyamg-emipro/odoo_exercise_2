@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_stock_location_ept_tree" model="ir.ui.view">
+        <field name="name">stock.location.ept.tree</field>
+        <field name="model">stock.location.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Stock Locations">
+                <field name="name" />
+                <field name="parent_id" />
+                <field name="location_type" />
+                <field name="is_scrap_location" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_stock_location_ept_form" model="ir.ui.view">
+        <field name="name">stock.location.ept.form</field>
+        <field name="model">stock.location.ept</field>
+        <field name="arch" type="xml">
+            <form string="Stock Location">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="parent_id" />
+                        </group>
+                        <group>
+                            <field name="location_type" />
+                            <field name="is_scrap_location" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_stock_location_ept_filter" model="ir.ui.view">
+        <field name="name">stock.location.ept.search</field>
+        <field name="model">stock.location.ept</field>
+        <field name="arch" type="xml">
+            <search string="Search the Stock Location">
+                <field name="name" />
+                <field name="parent_id" />
+                <group string="Group By" expand="0">
+                    <filter name="stock_location_ept_type" string="Location Type" context="{'group_by': 'location_type'}" />
+                </group>
+                <filter name="stock_location_ept_not_scrap" string="Not Scrap" domain="[('is_scrap_location', '=', False)]" />
+                <filter name="stock_location_ept_scrap" string="Only Scrap" domain="[('is_scrap_location', '=', True)]" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_stock_location_ept_window" model="ir.actions.act_window">
+        <field name="name">Stock Locations</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_stock_location_ept_filter" />
+        <field name="res_model">stock.location.ept</field>
+        <field name="help" type="html">
+            <p>Opps, There are no Stock Location available to show!</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_stock_location_ept"
+              name="Stock Locations"
+              parent="menu_stock_warehouse_ept_sub1"
+              action="action_stock_location_ept_window"
+              />
+</odoo>

@@ -10,6 +10,7 @@
                 <field name="date" />
                 <field name="salesperson" />
                 <field name="state" />
+                <field name="warehouse_id" />
                 <field name="total_weight" />
                 <field name="total_volume" />
                 <field name="order_total" />
@@ -23,7 +24,12 @@
         <field name="arch" type="xml">
             <form string="Sales Order">
                 <header>
-                    <field name="state" widget="statusbar" clickable="true" />
+                    <field name="state" widget="statusbar" />
+                </header>
+                <header>
+                    <button name="confirm_sale_order" string="Confirm Order" type="object" attrs="{'invisible': [('state', '!=', 'Draft')]}"/>
+                    <button name="cancel_sale_order" string="Cancel Order" type="object" attrs="{'invisible': ['|', ('state', '=', 'Done'), ('state', '=', 'Cancelled')]}"/>
+                    <button name="draft_sale_order" string="Revive the Order" type="object" attrs="{'invisible': [('state', '!=', 'Cancelled')]}"/>
                 </header>
                 <sheet>
                     <group>
@@ -34,6 +40,7 @@
                             <field name="partner_shipping_id" domain="[('address_type', '=', 'Shipping')]" />
                         </group>
                         <group>
+                            <field name="warehouse_id" />
                             <field name="date" />
                             <field name="salesperson" />
                         </group>
@@ -52,7 +59,7 @@
                                     </tree>
                                     <form string="Order Line">
                                         <header>
-                                            <field name="state" widget="statusbar" clickable="true" />
+                                            <field name="state" widget="statusbar" />
                                         </header>
                                         <sheet>
                                             <group>
