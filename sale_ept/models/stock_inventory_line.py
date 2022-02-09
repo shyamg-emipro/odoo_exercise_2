@@ -13,4 +13,5 @@ class StockInventoryLine(models.Model):
     difference = fields.Float(string="Difference", help="Difference in the system quantity and actual quantity", compute="calculate_difference", store=False)
 
     def calculate_difference(self):
-        pass
+        for line in self:
+            line.difference = line.available_qty - line.counted_product_qty

@@ -15,10 +15,47 @@ class StockInventory(models.Model):
     stock_move_ids = fields.One2many(string="Stock Moves", help="Stock Movements of the current location", comodel_name="stock.move.ept", inverse_name="stock_inventory_id")
 
     def start_inventory(self):
-        pass
+        products = self.env['product.ept'].search([])
+        for product in products:
+            new_product = product.with_context({'location': self.location_id})
+            new_product.calculate_stock()
+            if new_product.product_stock != 0:
+                self.inventory_line_ids.create({
+                    'inventory_id': self.id,
+                    'product_id': new_product.id,
+                    'available_qty': new_product.product_stock,
+                    'counted_product_qty': 0
+                })
+        self.state = "In-Progress"
 
     def validate_inventory(self):
-        pass
+        line_location = self.location_id
+        inventory_location = self.env['stock.location.ept'].search([('location_type', '=', 'Inventory Loss')], limit=1)
+
+        for line in self.inventory_line_ids:
+            if line.difference < 0:
+                destination_location = line_location
+                source_location = inventory_location
+            elif line.difference > 0:
+                destination_location = inventory_location
+                source_location = line_location
+            else:
+                continue
+
+            values = {
+                'name': line.product_id.name + ": " + source_location.name + " -> " + destination_location.name,
+                'product_id': line.product_id.id,
+                'uom_id': line.product_id.uom_id.id,
+                'source_location_id': source_location.id,
+                'destination_location_id': destination_location.id,
+                'qty_to_deliver': abs(line.difference),
+                'qty_done': abs(line.difference),
+                'state': 'Done',
+                'stock_inventory_id': self.id
+            }
+            self.env['stock.move.ept'].create(values)
+
+        self.state = "Done"
 
     def cancel_inventory(self):
-        pass
+        self.state = "Cancelled"

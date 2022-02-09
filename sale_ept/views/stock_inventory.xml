@@ -24,7 +24,7 @@
                 <header>
                     <button string="Start Inventory" name="start_inventory" type="object" attrs="{'invisible': [('state', '!=', 'Draft')]}"/>
                     <button string="Validate Inventory" name="validate_inventory" type="object" attrs="{'invisible': [('state', '!=', 'In-Progress')]}"/>
-                    <button string="Cancel Inventory" name="cancel_inventory" type="object" attrs="{'invisible': ['|', ('state', '!=', 'Draft'), ('state', '!=', 'In-Progress')]}"/>
+                    <button string="Cancel Inventory" name="cancel_inventory" type="object" attrs="{'invisible': [('state', '!=', 'Draft'), ('state', '!=', 'In-Progress')]}"/>
                 </header>
                 <sheet>
                     <group>

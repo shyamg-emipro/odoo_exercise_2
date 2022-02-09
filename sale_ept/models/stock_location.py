@@ -18,3 +18,10 @@ class StockLocation(models.Model):
                                                 ('Transit', 'Transit'),
                                                 ('View', 'View')])
     is_scrap_location = fields.Boolean(string="Is Scrap Location", help="Specifies whether the location is scrap location or not")
+
+    def name_get(self):
+        result = []
+        for location in self:
+            name = location.name + " - " + location.location_type
+            result.append((location.id, name))
+        return result

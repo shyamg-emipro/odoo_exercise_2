@@ -27,9 +27,10 @@ class StockMove(models.Model):
     picking_id = fields.Many2one(string="Stock Picking", help="Stock Sale or Purchase Movement",
                                  comodel_name="stock.picking.ept")
 
-    @api.onchange('qty_done')
-    def change_state(self):
-        if self.qty_done == self.qty_to_deliver:
-            self.state = "Done"
-        elif self.qty_done > self.qty_to_deliver:
-            raise exceptions.UserError("You are not allowed to enter quantity more then the actual Demand!")
+    # Do not call ORM methods in onchange methods..
+    # @api.onchange('qty_done')
+    # def change_state(self):
+    #     if self.qty_done == self.qty_to_deliver:
+    #         self.state = "Done"
+    #     elif self.qty_done > self.qty_to_deliver:
+    #         raise exceptions.UserError("You are not allowed to enter quantity more then the actual Demand!")

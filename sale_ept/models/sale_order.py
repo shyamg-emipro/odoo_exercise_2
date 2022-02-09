@@ -97,7 +97,7 @@ class SaleOrder(models.Model):
             return False
         for line in self.order_lines:
             stock_moves_data.append((0,0, {
-                'name': "Product Name: " + source_location.name + " -> " + destination_location.name,
+                'name': line.product_id.name + ": " + source_location.name + " -> " + destination_location.name,
                 'product_id': line.product_id.id,
                 'uom_id': line.uom_id.id,
                 'source_location_id': source_location.id,
@@ -111,22 +111,25 @@ class SaleOrder(models.Model):
                            'sale_order_id': self.id,
                            'move_ids': stock_moves_data}
         self.env['stock.picking.ept'].create(sale_order_data)
+        self.order_lines.state = "Confirmed"
         self.state = "Confirmed"
 
     def cancel_sale_order(self):
         delivery_order = self.env['stock.picking.ept'].search([('sale_order_id', '=', self.id)])
         if not delivery_order:
+            self.order_lines.state = "Cancelled"
             self.state = "Cancelled"
         else:
             if delivery_order.state == "Cancelled":
+                self.order_lines.state = "Cancelled"
                 self.state = "Cancelled"
             else:
                 raise exceptions.UserError("First Cancel the Delivery Order!")
 
     def draft_sale_order(self):
+        self.order_lines.state = "Draft"
         self.state = "Draft"
 
     def done_sale_order(self):
-        for line in self.order_lines:
-            line.state = "Confirmed"
+        self.order_lines.state = "Done"
         self.state = "Done"

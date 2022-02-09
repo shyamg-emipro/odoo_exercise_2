@@ -11,7 +11,7 @@ class SaleOrderLine(models.Model):
     quantity = fields.Float(string="Quantity", help="Quantity of the Product", digits=(6, 2))
     unit_price = fields.Float(string="Unit Price", help="Unit price of the product", digits=(6, 2))
     state = fields.Selection(string="State", help="State of the order line",
-                             selection=[('Draft', 'Draft'), ('Confirmed', 'Confirmed'), ('Cancelled', 'Cancelled')],
+                             selection=[('Draft', 'Draft'), ('Confirmed', 'Confirmed'), ('Done', 'Done'), ('Cancelled', 'Cancelled')],
                              default="Draft")
     uom_id = fields.Many2one(string="UOM", help="Unit of measure of the product",
                              comodel_name="product.uom.ept")

@@ -34,7 +34,7 @@ class StockPicking(models.Model):
 
     def validate(self):
         for move in self.move_ids:
-            if not move.state == "Done":
+            if not move.qty_to_deliver == move.qty_done:
                 raise exceptions.UserError("First make sure that Product quantities is Delivered or Received")
                 return False
         if self.transaction_type == "In":
