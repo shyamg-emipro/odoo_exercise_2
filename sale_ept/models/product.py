@@ -44,12 +44,13 @@ class Product(models.Model):
 
             for location in stock_locations:
                 for move in stock_moves:
+                    if move.state != "Done":
+                        continue
                     if move.destination_location_id == location:
                         total_stock += move.qty_done
                     elif move.source_location_id == location:
                         total_stock -= move.qty_done
             product.product_stock = total_stock
-            # print(product.product_stock)
 
         # for product in self:
         #     product_move = self.env['stock.move.ept'].search([('product_id', '=', product.id)])
@@ -63,3 +64,7 @@ class Product(models.Model):
         #                 total_stock -= product.qty_done
         #         stock.product_stock = total_stock
         #     stock.product_stock = total_stock
+
+    def open_update_wizard(self):
+        action = self.env['ir.actions.act_window']._for_xml_id('sale_ept.action_product_stock_update_ept_window')
+        return action

@@ -33,6 +33,7 @@ class SaleOrder(models.Model):
     lead_id = fields.Many2one(comodel_name="crm.lead.ept", string="Lead", help="Lead details of this order")
     warehouse_id = fields.Many2one(string="Warehouse", help="Warehouse from which product is going to be delivered to the customer",
                                    comodel_name="stock.warehouse.ept")
+    picking_ids = fields.One2many(string="Delivery Orders", help="Delivery Orders associated with this Sale Order", comodel_name="stock.picking.ept", inverse_name="sale_order_id")
 
     @api.model
     def create(self, vals):

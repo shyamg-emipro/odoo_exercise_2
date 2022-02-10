@@ -17,6 +17,8 @@ class PurchaseOrder(models.Model):
     purchase_order_line_ids = fields.One2many(string="Purchase Order Lines", help="Products Purchased in this order",
                                               comodel_name="purchase.order.line.ept",
                                               inverse_name="purchase_order_id")
+    picking_ids = fields.One2many(string="Incoming Shipments", help="Incoming Shipments associated with this Purchase Order",
+                                  comodel_name="stock.picking.ept", inverse_name="purchase_order_id")
 
     @api.model
     def create(self, vals):

@@ -22,6 +22,10 @@
         <field name="model">product.ept</field>
         <field name="arch" type="xml">
             <form string="Product">
+                <header>
+                    <button name="open_update_wizard" string="Update Stock" type="object"/>
+                    <button name="%(sale_ept.action_product_stock_update_ept_window)d" string="Update Stock" type="action"/>
+                </header>
                 <sheet>
                     <group>
                         <group>
