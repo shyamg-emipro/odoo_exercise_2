@@ -15,7 +15,7 @@ class SaleOrderLine(models.Model):
                              default="Draft")
     uom_id = fields.Many2one(string="UOM", help="Unit of measure of the product",
                              comodel_name="product.uom.ept")
-    subtotal_without_tax = fields.Float(string="Sub Total", help="Sub total of the order line",
+    subtotal_without_tax = fields.Float(string="Subtotal", help="Sub total of the order line",
                                         compute="calculate_subtotal", store=True)
     stock_move_ids = fields.One2many(string="Stock Moves", help="Stock Moves associated with this sale order line.",
                                      comodel_name="stock.move.ept", inverse_name="sale_line_id")
@@ -23,6 +23,13 @@ class SaleOrderLine(models.Model):
                                  compute="find_delivered_qty")
     cancelled_qty = fields.Float(string="Cancelled Quantity", help="Number of quantity that has been cancelled",
                                  compute="find_delivered_qty")
+    warehouse_id = fields.Many2one(string="Warehouse",
+                                   help="Warehouse from which product is going to be delivered to the customer",
+                                   comodel_name="stock.warehouse.ept")
+    tax_ids = fields.Many2many(string="Customer Taxes", help="Taxes that are applicable on this product",
+                               comodel_name="account.tax.ept", domain=[('tax_use', '=', 'Sales')])
+    subtotal_with_tax = fields.Float(string="Subtotal (Tax included)", help="Subtotal of the purchase product with tax",
+                                     digits=(6, 2), compute="calculate_subtotal_with_tax", store=True)
 
     def find_delivered_qty(self):
         for order in self:
@@ -41,6 +48,7 @@ class SaleOrderLine(models.Model):
         self.quantity = 1
         self.unit_price = self.product_id.sale_price
         self.uom_id = self.product_id.uom_id.id
+        self.tax_ids = self.product_id.tax_ids
         if not self.product_id.description:
             self.name = self.product_id.name
         else:
@@ -50,3 +58,14 @@ class SaleOrderLine(models.Model):
     def calculate_subtotal(self):
         for line in self:
             line.subtotal_without_tax = line.quantity * line.unit_price
+
+    @api.depends('quantity', 'unit_price', 'tax_ids', 'product_id')
+    def calculate_subtotal_with_tax(self):
+        for line in self:
+            total_tax = 0
+            for tax in line.tax_ids:
+                if tax.tax_amount_type == "Percentage":
+                    total_tax += tax.tax_value * line.subtotal_without_tax / 100
+                else:
+                    total_tax += tax.tax_value
+            line.subtotal_with_tax = line.subtotal_without_tax + total_tax

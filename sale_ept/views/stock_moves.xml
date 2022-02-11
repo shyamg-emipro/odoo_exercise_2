@@ -16,6 +16,38 @@
             </tree>
         </field>
     </record>
+
+    <record id="view_stock_move_ept_form" model="ir.ui.view">
+        <field name="name">stock.move.ept.form</field>
+        <field name="model">stock.move.ept</field>
+        <field name="arch" type="xml">
+            <form string="Stock Moves">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="product_id"/>
+                            <field name="uom_id"/>
+                            <field name="sale_line_id"/>
+                            <field name="purchase_line_id"/>
+                            <field name="stock_inventory_id"/>
+                            <field name="picking_id"/>
+                        </group>
+                        <group>
+                            <field name="source_location_id"/>
+                            <field name="destination_location_id"/>
+                            <field name="qty_to_deliver"/>
+                            <field name="qty_done"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
     <record id="action_stock_move_ept_window" model="ir.actions.act_window">
         <field name="name">Stock Moves</field>
         <field name="type">ir.actions.act_window</field>

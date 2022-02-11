@@ -37,3 +37,5 @@ access_inventory_user2,User: Inventory User 2,model_stock_inventory_line_ept,gro
 access_inventory_manager2,User: Inventory Manager 2,model_stock_inventory_line_ept,group_sale_manager,1,1,1,1
 access_stock_update_user,User: Stock Update User,model_product_stock_update_ept,group_sale_salesperson,1,1,1,1
 access_stock_update_manager,User: Stock Update Manager,model_product_stock_update_ept,group_sale_manager,1,1,1,1
+access_account_ept_user,User: Account Tax User,model_account_tax_ept,group_sale_salesperson,1,1,1,1
+access_account_ept_manager,User: Account Manager,model_account_tax_ept,group_sale_manager,1,1,1,1

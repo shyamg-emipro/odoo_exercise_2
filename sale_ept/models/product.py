@@ -31,6 +31,8 @@ class Product(models.Model):
                              comodel_name="product.uom.ept")
     description = fields.Text(string="Description", help="Description about the product")
     product_stock = fields.Float(string="Stock", help="Available stock of the product", compute="calculate_stock", store=False, readonly=True)
+    tax_ids = fields.Many2many(string="Customer Taxes", help="Taxes that can be applicable",
+                               comodel_name="account.tax.ept", domain=[('tax_use', '=', 'Sales')])
 
     @api.depends('sku')
     def calculate_stock(self):

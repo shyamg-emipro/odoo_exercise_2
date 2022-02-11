@@ -81,4 +81,6 @@ class StockPicking(models.Model):
                 raise exceptions.UserError("You have to deliver at least 1 product to validate!")
 
     def cancel_order(self):
+        for move in self.move_ids:
+            move.state = "Cancelled"
         self.state = "Cancelled"

@@ -51,6 +51,9 @@
                             <page name="product_ept_p1" string="Description">
                                 <field name="description" />
                             </page>
+                            <page name="product_ept_p2" string="Accounting">
+                                <field name="tax_ids" widget="many2many_tags"/>
+                            </page>
                         </notebook>
                     </group>
                 </sheet>

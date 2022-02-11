@@ -31,9 +31,15 @@ class SaleOrder(models.Model):
     order_total = fields.Float(string="Order Total", help="Total amount of the order", compute="calculate_order_total",
                                store=True)
     lead_id = fields.Many2one(comodel_name="crm.lead.ept", string="Lead", help="Lead details of this order")
-    warehouse_id = fields.Many2one(string="Warehouse", help="Warehouse from which product is going to be delivered to the customer",
-                                   comodel_name="stock.warehouse.ept")
+    warehouse_id = fields.Many2one(string="Warehouse",
+                                   help="Warehouse from which product is going to be delivered to the customer",
+                                   comodel_name="stock.warehouse.ept",
+                                   required=True)
     picking_ids = fields.One2many(string="Delivery Orders", help="Delivery Orders associated with this Sale Order", comodel_name="stock.picking.ept", inverse_name="sale_order_id")
+    total_tax = fields.Float(string="Total Tax", help="Finds the total Tax on all order lines",
+                             digits=(6, 2), compute="find_total_tax", store=True)
+    total_amount = fields.Float(string="Total Amount", help="Total Amount to be paid by the customer",
+                                digits=(6, 2), compute="get_total_amount", store=True)
 
     @api.model
     def create(self, vals):
@@ -87,17 +93,25 @@ class SaleOrder(models.Model):
                     self.partner_shipping_id = invoice[0]
 
     def confirm_sale_order(self):
-        stock_moves_data = []
+        stock_locations = {}
         source_location = self.warehouse_id.stock_location_id
         destination_location = self.env['stock.location.ept'].search([('location_type', '=', 'Customer')], limit=1)
+
         if not destination_location.id:
             raise exceptions.UserError("No, Customer Location found, Please create customer location record to continue!")
             return False
         if not source_location.id:
             raise exceptions.UserError("No, Warehouse Location found, Please select Warehouse location to continue!")
             return False
+
         for line in self.order_lines:
-            stock_moves_data.append((0,0, {
+            if line.warehouse_id:
+                source_location = line.warehouse_id.stock_location_id
+            else:
+                source_location = self.warehouse_id.stock_location_id
+            if not stock_locations.get(source_location.id, False):
+                stock_locations.update({source_location.id: []})
+            stock_locations[source_location.id].append((0, 0, {
                 'name': line.product_id.name + ": " + source_location.name + " -> " + destination_location.name,
                 'product_id': line.product_id.id,
                 'uom_id': line.uom_id.id,
@@ -107,25 +121,29 @@ class SaleOrder(models.Model):
                 'sale_line_id': line.id,
             }))
 
-        sale_order_data = {'partner_id': self.partner_shipping_id.id,
-                           'transaction_type': 'Out',
-                           'sale_order_id': self.id,
-                           'move_ids': stock_moves_data}
-        self.env['stock.picking.ept'].create(sale_order_data)
+        for warehouse_location_id, moves in stock_locations.items():
+            sale_order_data = {'partner_id': self.partner_shipping_id.id,
+                               'transaction_type': 'Out',
+                               'sale_order_id': self.id,
+                               'move_ids': moves}
+            self.env['stock.picking.ept'].create(sale_order_data)
         self.order_lines.state = "Confirmed"
         self.state = "Confirmed"
 
     def cancel_sale_order(self):
-        delivery_order = self.env['stock.picking.ept'].search([('sale_order_id', '=', self.id)])
-        if not delivery_order:
+        delivery_orders = self.env['stock.picking.ept'].search([('sale_order_id', '=', self.id)])
+        if not delivery_orders:
             self.order_lines.state = "Cancelled"
             self.state = "Cancelled"
         else:
-            if delivery_order.state == "Cancelled":
+            for order in delivery_orders:
+                if order.state != "Cancelled":
+                    raise exceptions.UserError("First Cancel the Delivery Order!")
+                    break
+            else:
                 self.order_lines.state = "Cancelled"
                 self.state = "Cancelled"
-            else:
-                raise exceptions.UserError("First Cancel the Delivery Order!")
+
 
     def draft_sale_order(self):
         self.order_lines.state = "Draft"
@@ -134,3 +152,51 @@ class SaleOrder(models.Model):
     def done_sale_order(self):
         self.order_lines.state = "Done"
         self.state = "Done"
+
+    def show_delivery_order_ept(self):
+        action = self.env['ir.actions.actions']._for_xml_id("sale_ept.action_stock_picking_ept_out_window")
+
+        delivery_orders = self.picking_ids
+
+        if len(delivery_orders) > 1:
+            action['domain'] = [('id', 'in', delivery_orders.ids)]
+        elif delivery_orders:
+            form_view = [(self.env.ref("sale_ept.view_stock_picking_ept_form").id, 'form')]
+            action['views'] = form_view
+            action['res_id'] = delivery_orders.id
+        else:
+            raise exceptions.UserError("No Delivery Order is created for this sale order")
+            return False
+        return action
+
+    def show_stock_moves(self):
+        action = self.env['ir.actions.actions']._for_xml_id("sale_ept.action_stock_move_ept_window")
+
+        stock_moves = self.picking_ids.move_ids
+
+        if len(stock_moves) > 1:
+            action['domain'] = [('id', 'in', stock_moves.ids)]
+        elif stock_moves:
+            form_view = [(self.env.ref("sale_ept.view_stock_move_ept_form").id, 'form')]
+            action['views'] = form_view
+            action['res_id'] = stock_moves.id
+        else:
+            raise exceptions.UserError("No Stock Move is created for this sale order")
+            return False
+        return action
+
+    @api.depends('order_lines')
+    def get_total_amount(self):
+        for order in self:
+            total_amount = 0
+            for line in order.order_lines:
+                total_amount += line.subtotal_with_tax
+            order.total_amount = total_amount
+
+    @api.depends('order_lines.subtotal_with_tax')
+    def find_total_tax(self):
+        for order in self:
+            total_tax = 0
+            for line in order.order_lines:
+                total_tax += line.subtotal_with_tax - line.subtotal_without_tax
+            order.total_tax = total_tax
