@@ -94,7 +94,7 @@ class SaleOrder(models.Model):
 
     def confirm_sale_order(self):
         stock_locations = {}
-        source_location = self.warehouse_id.stock_location_id
+        source_location = self.warehouse_id
         destination_location = self.env['stock.location.ept'].search([('location_type', '=', 'Customer')], limit=1)
 
         if not destination_location.id:
@@ -106,16 +106,17 @@ class SaleOrder(models.Model):
 
         for line in self.order_lines:
             if line.warehouse_id:
-                source_location = line.warehouse_id.stock_location_id
+                source_location = line.warehouse_id
             else:
-                source_location = self.warehouse_id.stock_location_id
+                source_location = self.warehouse_id
             if not stock_locations.get(source_location.id, False):
                 stock_locations.update({source_location.id: []})
+
             stock_locations[source_location.id].append((0, 0, {
-                'name': line.product_id.name + ": " + source_location.name + " -> " + destination_location.name,
+                'name': line.product_id.name + ": " + source_location.stock_location_id.name + " -> " + destination_location.name,
                 'product_id': line.product_id.id,
                 'uom_id': line.uom_id.id,
-                'source_location_id': source_location.id,
+                'source_location_id': source_location.stock_location_id.id,
                 'destination_location_id': destination_location.id,
                 'qty_to_deliver': line.quantity,
                 'sale_line_id': line.id,
@@ -127,6 +128,7 @@ class SaleOrder(models.Model):
                                'sale_order_id': self.id,
                                'move_ids': moves}
             self.env['stock.picking.ept'].create(sale_order_data)
+
         self.order_lines.state = "Confirmed"
         self.state = "Confirmed"
 

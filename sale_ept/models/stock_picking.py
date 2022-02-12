@@ -70,15 +70,25 @@ class StockPicking(models.Model):
             for new_move in new_moves:
                 new_move.picking_id = new_order.id
             self.back_order_id = new_order.id
-        else:
-            if all_done_move:
-                self.state = "Done"
-                if self.transaction_type == "Out":
-                    self.sale_order_id.done_sale_order()
-                else:
-                    self.purchase_order_id.done_purchase_order()
+        elif len(self.move_ids.ids) == len(all_done_move):
+            self.state = "Done"
+            if self.transaction_type == "Out":
+                self.sale_order_id.done_sale_order()
             else:
-                raise exceptions.UserError("You have to deliver at least 1 product to validate!")
+                self.purchase_order_id.done_purchase_order()
+        elif all_done_move:
+            new_order = self.create({
+                'partner_id': self.partner_id.id,
+                'sale_order_id': self.sale_order_id.id or False,
+                'purchase_order_id': self.purchase_order_id.id or False,
+                'transaction_type': self.transaction_type,
+                'state': "Done"
+            })
+            for done_move in all_done_move:
+                done_move.picking_id = new_order.id
+            self.back_order_id = new_order.id
+        else:
+            raise exceptions.UserError("You have to deliver at least 1 product to validate!")
 
     def cancel_order(self):
         for move in self.move_ids:
