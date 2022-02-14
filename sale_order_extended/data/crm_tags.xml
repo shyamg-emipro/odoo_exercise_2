@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="crm_tags_sale_order_extended" model="crm.tag">
+            <field name="name">From Lead</field>
+        </record>
+    </data>
+</odoo>
