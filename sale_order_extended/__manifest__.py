@@ -4,8 +4,8 @@
     'description': """
         Requirement 15
     """,
-    'depends': ['base', 'sale_crm'],
-    'data': ['views/sale_order.xml', 'data/crm_tags.xml'],
+    'depends': ['base', 'sale_crm', 'product'],
+    'data': ['views/sale_order.xml', 'data/crm_tags.xml', 'views/product_product.xml', 'views/sale_order_line.xml'],
     'demo': [],
     'installable': True,
     'application': True,

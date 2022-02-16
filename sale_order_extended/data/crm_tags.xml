@@ -4,5 +4,12 @@
         <record id="crm_tags_sale_order_extended" model="crm.tag">
             <field name="name">From Lead</field>
         </record>
+
+        <record id="crm_tags_product_product_extended" model="product.product">
+            <field name="name">Toothbrush</field>
+            <field name="detailed_type">product</field>
+            <field name="list_price">20</field>
+            <field name="standard_price">10</field>
+        </record>
     </data>
 </odoo>
