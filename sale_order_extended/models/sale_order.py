@@ -44,6 +44,7 @@ class SaleOrderExtended(models.Model):
                     })
 
     def show_reserved_order_lines(self):
+        products = self.order_line.product_id
         action = self.env['ir.actions.actions']._for_xml_id("sale_order_extended.action_sale_order_line_extended_window")
-        action['domain'] = [('id', 'not in', self.order_line.ids)]
+        action['domain'] = [('id', 'not in', self.order_line.ids), ('product_id', 'in', products.ids)]
         return action
