@@ -13,3 +13,4 @@ class SaleOrderLineExtended(models.Model):
             if child:
                 child.unlink()
         return super(SaleOrderLineExtended, self).unlink()
+

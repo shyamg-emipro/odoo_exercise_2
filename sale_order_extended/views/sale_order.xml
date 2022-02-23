@@ -7,9 +7,11 @@
         <field name="arch" type="xml">
             <header position="inside">
                 <button name="add_deposit" string="Manage Deposits" type="object"/>
+                <button name="confirm_validate" string="Confirm and Validate" type="object"/>
             </header>
             <field name="date_order" position="after">
                 <field name="lead_id"/>
+                <field name="is_all_picking_completed"/>
             </field>
             <xpath expr="//div[@name='button_box']">
                 <button name="show_reserved_order_lines" type="object" class="oe_stat_button" icon="fa-globe icon">
@@ -18,6 +20,29 @@
                         <span class="o_stat_text">Order Lines</span>
                     </div>
                 </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sale_order_extended_tree" model="ir.ui.view">
+        <field name="name">sale.order.extended.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="is_all_picking_completed"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_sale_order_extended_filter" model="ir.ui.view">
+        <field name="name">sale.order.extended.search</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='order_date']" position="after">
+                <filter name="sale_order_extended_filter_is_all_picking_completed" string="Completed Sale Orders"
+                    domain="[('is_all_picking_completed', '=', False)]"/>
             </xpath>
         </field>
     </record>
