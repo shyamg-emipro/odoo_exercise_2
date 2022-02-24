@@ -68,8 +68,9 @@ class SaleOrderExtended(models.Model):
 
     def find_completed_sale_order(self, operator, value):
         query = """
-            select id from sale_order where id not in (select sale_id from stock_picking where (state != 'done' or state != 'cancel') and sale_id is not null group by sale_id);
+            select id from sale_order where id not in (select sale_id from stock_picking where state not in ('done', 'cancel') and sale_id is not null group by sale_id);
         """
+        # select sale_id from stock_picking where state in ('done', 'cancel') and sale_id is not null group by sale_id;
         self._cr.execute(query)
         get_res = list(map(lambda li: li[0], self._cr.fetchall()))
         return [('id', 'in', get_res)]
