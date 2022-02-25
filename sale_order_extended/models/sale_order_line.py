@@ -6,6 +6,8 @@ class SaleOrderLineExtended(models.Model):
     _inherit = "sale.order.line"
 
     parent_id = fields.Many2one(comodel_name="sale.order.line", string="Parent Line", help="Parent Order Line of the current order line")
+    cost_price = fields.Float(related="product_id.standard_price", string="Cost")
+    margin = fields.Float(string="Margin", help="Margin on this product", compute="_calculate_margin", store=False)
 
     def unlink(self):
         for line in self:
@@ -14,3 +16,6 @@ class SaleOrderLineExtended(models.Model):
                 child.unlink()
         return super(SaleOrderLineExtended, self).unlink()
 
+    def _calculate_margin(self):
+        # for line in self:
+        pass
