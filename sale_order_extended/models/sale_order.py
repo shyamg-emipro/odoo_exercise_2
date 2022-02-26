@@ -12,6 +12,26 @@ class SaleOrderExtended(models.Model):
                                               compute="_compute_is_all_picking_completed",
                                               search="find_completed_sale_order",
                                               store=False)
+    total_margin = fields.Float(string="Total Profit", help="Total profit margin of this sale order.", compute="_get_total_profit")
+    total_margin_percentage = fields.Float(string="Total Profit Percentage", help="Total profit margin percentage", compute="_get_total_profit")
+
+    def _get_total_profit(self):
+        for order in self:
+            total_margin_percentage = 0
+            total_profit = 0
+            for line in order.order_line:
+                total_profit += line.margin
+            if total_profit > 0:
+                total_margin_percentage = total_profit * 100 / order.amount_total
+            elif total_profit == 0:
+                total_margin_percentage = 0
+            else:
+                if order.amount_total <= 0:
+                    total_margin_percentage = -100
+                else:
+                    total_margin_percentage = total_profit * 100 / (order.amount_total - total_profit)
+            order.total_margin = total_profit
+            order.total_margin_percentage = total_margin_percentage
 
     def action_confirm(self):
         # product = self.env.ref("sale_order_extended.crm_tags_product_product_extended")
