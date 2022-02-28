@@ -1,4 +1,4 @@
-from odoo import models, fields, exceptions
+from odoo import models, fields, exceptions, api
 
 
 class SaleOrderExtended(models.Model):
@@ -14,6 +14,26 @@ class SaleOrderExtended(models.Model):
                                               store=False)
     total_margin = fields.Float(string="Total Profit", help="Total profit margin of this sale order.", compute="_get_total_profit")
     total_margin_percentage = fields.Float(string="Total Profit Percentage", help="Total profit margin percentage", compute="_get_total_profit")
+    product_tmpl_ids = fields.Many2many(comodel_name="product.template", string="Product", help="Select Product to get It's variants.")
+
+    @api.onchange('product_tmpl_ids')
+    def get_product_variants(self):
+        # products = self.product_tmpl_ids.product_variant_ids.filtered(lambda p: sum([stocks.reserved_quantity for stocks in p.stock_quant_ids]) > 1)
+        products = self.product_tmpl_ids.product_variant_ids.filtered(
+            lambda p: p.virtual_available > 1)
+        for pid in products.ids:
+            order_line = self.env["sale.order.line"].new({'product_id': pid})
+            order_line.product_id_change()
+            self.order_line = [(0, 0, {
+                'product_id': pid,
+                'name': order_line.name,
+                'product_uom_qty': 1,
+                'price_unit': order_line.product_id.list_price
+            })]
+            self.write({
+                'order_line': order_line
+            })
+
 
     def _get_total_profit(self):
         for order in self:

@@ -21,6 +21,15 @@
                     </div>
                 </button>
             </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='company_id']" position="after">
+                <field name="cost_price"/>
+                <field name="margin"/>
+                <field name="margin_in_percentage"/>
+            </xpath>
+            <xpath expr="//sheet/notebook/page[@name='order_lines']/group[@name='note_group']/group[2]/field[@name='tax_totals_json']" position="after">
+                <field name="total_margin" colspan="2"/>
+                <field name="total_margin_percentage" colspan="2"/>
+            </xpath>
         </field>
     </record>
 
