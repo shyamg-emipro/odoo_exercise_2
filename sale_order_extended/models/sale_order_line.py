@@ -5,6 +5,7 @@ class SaleOrderLineExtended(models.Model):
     _name = "sale.order.line"
     _inherit = "sale.order.line"
 
+    new_warehouse_id = fields.Many2one(comodel_name="stock.warehouse", string="Warehouse")
     parent_id = fields.Many2one(comodel_name="sale.order.line", string="Parent Line", help="Parent Order Line of the current order line")
     cost_price = fields.Float(string="Cost", compute="_get_cost_price", store=True)
     margin = fields.Float(string="Profit", help="Margin on this product", compute="_calculate_margin")
@@ -43,3 +44,8 @@ class SaleOrderLineExtended(models.Model):
                     margin_percentage = margin * 100 / (line.cost_price * line.product_uom_qty)
             line.margin = margin
             line.margin_in_percentage = margin_percentage
+
+    def _prepare_procurement_values(self, group_id=False):
+        procurement_values = super(SaleOrderLineExtended, self)._prepare_procurement_values(group_id)
+        procurement_values['warehouse_id'] = self.new_warehouse_id
+        return procurement_values

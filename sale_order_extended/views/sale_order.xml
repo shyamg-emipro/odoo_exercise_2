@@ -25,6 +25,7 @@
                 <field name="cost_price"/>
                 <field name="margin"/>
                 <field name="margin_in_percentage"/>
+                <field name="new_warehouse_id"/>
             </xpath>
             <xpath expr="//sheet/notebook/page[@name='order_lines']/group[@name='note_group']/group[2]/field[@name='tax_totals_json']" position="after">
                 <field name="total_margin" colspan="2"/>

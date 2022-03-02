@@ -21,19 +21,17 @@ class SaleOrderExtended(models.Model):
         # products = self.product_tmpl_ids.product_variant_ids.filtered(lambda p: sum([stocks.reserved_quantity for stocks in p.stock_quant_ids]) > 1)
         products = self.product_tmpl_ids.product_variant_ids.filtered(
             lambda p: p.virtual_available > 1)
+        order_lines = []
         for pid in products.ids:
             order_line = self.env["sale.order.line"].new({'product_id': pid})
             order_line.product_id_change()
-            self.order_line = [(0, 0, {
+            order_lines.append((0, 0, {
                 'product_id': pid,
                 'name': order_line.name,
                 'product_uom_qty': 1,
                 'price_unit': order_line.product_id.list_price
-            })]
-            self.write({
-                'order_line': order_line
-            })
-
+            }))
+        self.order_line = order_lines
 
     def _get_total_profit(self):
         for order in self:
