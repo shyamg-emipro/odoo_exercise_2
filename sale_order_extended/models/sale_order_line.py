@@ -47,5 +47,6 @@ class SaleOrderLineExtended(models.Model):
 
     def _prepare_procurement_values(self, group_id=False):
         procurement_values = super(SaleOrderLineExtended, self)._prepare_procurement_values(group_id)
-        procurement_values['warehouse_id'] = self.new_warehouse_id
+        if self.new_warehouse_id:
+            procurement_values['warehouse_id'] = self.new_warehouse_id
         return procurement_values

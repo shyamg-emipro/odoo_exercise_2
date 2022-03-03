@@ -12,9 +12,12 @@ class SaleOrderExtended(models.Model):
                                               compute="_compute_is_all_picking_completed",
                                               search="find_completed_sale_order",
                                               store=False)
-    total_margin = fields.Float(string="Total Profit", help="Total profit margin of this sale order.", compute="_get_total_profit")
-    total_margin_percentage = fields.Float(string="Total Profit Percentage", help="Total profit margin percentage", compute="_get_total_profit")
-    product_tmpl_ids = fields.Many2many(comodel_name="product.template", string="Product", help="Select Product to get It's variants.")
+    total_margin = fields.Float(string="Total Profit", help="Total profit margin of this sale order.",
+                                compute="_get_total_profit")
+    total_margin_percentage = fields.Float(string="Total Profit Percentage", help="Total profit margin percentage",
+                                           compute="_get_total_profit")
+    product_tmpl_ids = fields.Many2many(comodel_name="product.template", string="Product",
+                                        help="Select Product to get It's variants.")
 
     @api.onchange('product_tmpl_ids')
     def get_product_variants(self):
@@ -23,14 +26,15 @@ class SaleOrderExtended(models.Model):
             lambda p: p.virtual_available > 1)
         order_lines = []
         for pid in products.ids:
-            order_line = self.env["sale.order.line"].new({'product_id': pid})
-            order_line.product_id_change()
-            order_lines.append((0, 0, {
-                'product_id': pid,
-                'name': order_line.name,
-                'product_uom_qty': 1,
-                'price_unit': order_line.product_id.list_price
-            }))
+            if pid not in self.order_line.product_id.ids:
+                order_line = self.env["sale.order.line"].new({'product_id': pid})
+                order_line.product_id_change()
+                order_lines.append((0, 0, {
+                    'product_id': pid,
+                    'name': order_line.name,
+                    'product_uom_qty': 1,
+                    'price_unit': order_line.product_id.list_price
+                }))
         self.order_line = order_lines
 
     def _get_total_profit(self):
@@ -88,8 +92,10 @@ class SaleOrderExtended(models.Model):
 
     def show_reserved_order_lines(self):
         products = self.order_line.product_id
-        action = self.env['ir.actions.actions']._for_xml_id("sale_order_extended.action_sale_order_line_extended_window")
-        action['domain'] = [('id', 'not in', self.order_line.ids), ('product_id', 'in', products.ids), ('move_ids.state', '=', "assigned")]
+        action = self.env['ir.actions.actions']._for_xml_id(
+            "sale_order_extended.action_sale_order_line_extended_window")
+        action['domain'] = [('id', 'not in', self.order_line.ids), ('product_id', 'in', products.ids),
+                            ('move_ids.state', '=', "assigned")]
         return action
 
     def confirm_validate(self):
