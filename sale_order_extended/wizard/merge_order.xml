@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_sale_order_merge_form" model="ir.ui.view">
+        <field name="name">sale.order.merge.form</field>
+        <field name="model">sale.order.merge</field>
+        <field name="arch" type="xml">
+            <form string="Merge Sale Order">
+                <group>
+                    <group>
+                        <field name="merge_options"/>
+                    </group>
+                    <group>
+                        <field name="merge_into" attrs="{'invisible': [('merge_options', 'not in', ['3', '4'])]}" widget="selection"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sale_order_merge_window" model="ir.actions.act_window">
+        <field name="name">Merge Sale Order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="binding_model_id" ref="sale_crm.model_sale_order"/>
+        <field name="binding_type">action</field>
+        <field name="binding_view_types">list</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_sale_order_merge_form"/>
+        <field name="res_model">sale.order.merge</field>
+    </record>
+</odoo>
