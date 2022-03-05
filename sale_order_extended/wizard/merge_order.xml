@@ -10,9 +10,13 @@
                         <field name="merge_options"/>
                     </group>
                     <group>
-                        <field name="merge_into" attrs="{'invisible': [('merge_options', 'not in', ['3', '4'])]}" widget="selection"/>
+                        <field name="merge_into" attrs="{'invisible': [('merge_options', 'not in', ['3', '4'])]}" widget="selection" domain="[('id', 'in', context.get('active_ids'))]"/>
                     </group>
                 </group>
+                <footer>
+                    <button name="merge_sale_order" string="Merge Order" type="object"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
             </form>
         </field>
     </record>

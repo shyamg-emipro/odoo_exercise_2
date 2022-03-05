@@ -50,3 +50,32 @@ class SaleOrderLineExtended(models.Model):
         if self.new_warehouse_id:
             procurement_values['warehouse_id'] = self.new_warehouse_id
         return procurement_values
+
+    def find_unique_products(self):
+
+        return products
+
+    def get_order_lines(self):
+        order_lines = {}
+        for line in self:
+            if order_lines.get((line.product_id.id, line.price_unit, line.tax_id), False):
+                d1, d2 = [0, 0]
+                product_qty = order_lines.get((line.product_id.id, line.price_unit, line.tax_id), False)[2 or False].get('product_uom_qty', False)
+                order_lines[(line.product_id.id, line.price_unit, line.tax_id)] = (d1, d2, {
+                    'product_id': line.product_id.id,
+                    'product_template_id': line.product_template_id.id,
+                    'name': line.name,
+                    'product_uom_qty': product_qty + line.product_uom_qty,
+                    'tax_id': line.tax_id
+            })
+            else:
+                new_line = self.env['sale.order.line'].new({'product_id': line.product_id.id})
+                new_line.product_id_change()
+                order_lines[(line.product_id.id, line.price_unit, line.tax_id)] = (0, 0, {
+                    'product_id': line.product_id.id,
+                    'product_template_id': new_line.product_template_id.id,
+                    'name': new_line.name,
+                    'product_uom_qty': line.product_uom_qty,
+                    'tax_id': line.tax_id
+                })
+        return list(order_lines.values())
