@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="sales_extended_security" model="ir.module.category">
+            <field name="name">Sales Extended</field>
+            <field name="description">This is a sale module created for learning odoo.</field>
+        </record>
+
+        <record id="group_dummy_group" model="res.groups">
+            <field name="name">User: Dummy_group</field>
+            <field name="category_id" ref="sales_extended_security" />
+        </record>
+    </data>
+</odoo>

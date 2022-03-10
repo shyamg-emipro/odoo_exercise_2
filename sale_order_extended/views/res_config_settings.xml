@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_sale_order_extended_res_config_settings_form" model="ir.ui.view">
+        <field name="name">sale.order.extended.res.config.settings.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='sale_management']" position="inside">
+                <h2 class="mt32">My Dummy Fields</h2>
+                <group style="padding-left:5vw">
+                    <group>
+                        <field name="default_dummy_field_a"/>
+                        <field name="dummy_field_b"/>
+                        <field name="sale_id"/>
+                        <field name="dummy_field_c"/>
+                        <field name="group_self_generated"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

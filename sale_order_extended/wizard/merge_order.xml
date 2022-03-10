@@ -10,7 +10,8 @@
                         <field name="merge_options"/>
                     </group>
                     <group>
-                        <field name="merge_into" attrs="{'invisible': [('merge_options', 'not in', ['3', '4'])]}" widget="selection" domain="[('id', 'in', context.get('active_ids'))]"/>
+                        <field name="merge_into" attrs="{'invisible': [('merge_options', 'not in', ['3', '4'])]}" widget="selection"/>
+<!--                         domain="[('id', 'in', context.get('active_ids'))]"-->
                     </group>
                 </group>
                 <footer>

@@ -18,6 +18,7 @@ class SaleOrderExtended(models.Model):
                                            compute="_get_total_profit")
     product_tmpl_ids = fields.Many2many(comodel_name="product.template", string="Product",
                                         help="Select Product to get It's variants.")
+    dummy_field_a = fields.Char(string="Dummy A")
 
     @api.onchange('product_tmpl_ids')
     def get_product_variants(self):
