@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="report_res_localization_ept" model="ir.actions.report">
+            <field name="name">Localization Report</field>
+            <field name="model">res.country.ept</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">res_localization_ept.report_localization</field>
+            <field name="report_file">res_localization_ept.localization_template</field>
+            <field name="binding_model_id" ref="model_res_country_ept"/>
+            <field name="binding_type">report</field>
+        </record>
+
+</odoo>

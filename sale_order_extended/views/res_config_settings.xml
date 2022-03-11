@@ -11,7 +11,7 @@
                     <group>
                         <field name="default_dummy_field_a"/>
                         <field name="dummy_field_b"/>
-                        <field name="sale_id"/>
+                        <field name="sale_extended_id"/>
                         <field name="dummy_field_c"/>
                         <field name="group_self_generated"/>
                     </group>

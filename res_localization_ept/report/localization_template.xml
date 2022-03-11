@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_localization">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Country Data</h2>
+                        <p>Country Name: <span t-field="doc.name"/></p>
+                        <p>Country Code: <span t-field="doc.code"/></p>
+                        <ul>
+                            <t t-foreach="doc.state" t-as="state">
+                                <li>State Name: <span t-field="state.name"/></li>
+                            </t>
+                        </ul>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

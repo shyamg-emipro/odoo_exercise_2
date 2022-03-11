@@ -6,7 +6,15 @@
         Requirement 1
     """,
     'depends': ['base'],
-    'data': ['security/localization_security.xml', 'security/ir.model.access.csv', 'views/country.xml', 'views/states.xml', 'views/city.xml'],
+    'data': [
+        'security/localization_security.xml',
+        'security/ir.model.access.csv',
+        'views/country.xml',
+        'views/states.xml',
+        'views/city.xml',
+        'report/localization_report.xml',
+        'report/localization_template.xml',
+    ],
     'demo': [],
     'installable': True,
     'application': True,

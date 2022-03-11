@@ -11,7 +11,10 @@
              'views/product_product.xml',
              'views/sale_order_line.xml',
              'wizard/merge_order.xml',
-             'views/res_config_settings.xml'],
+             'views/res_config_settings.xml',
+             'report/saleorder_report.xml',
+             'report/saleorder_template.xml'
+             ],
     'demo': [],
     'installable': True,
     'application': True,
