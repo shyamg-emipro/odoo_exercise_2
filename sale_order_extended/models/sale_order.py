@@ -38,6 +38,10 @@ class SaleOrderExtended(models.Model):
                 }))
         self.order_line = order_lines
 
+    @api.model
+    def default_get(self, fields):
+        return super(SaleOrderExtended, self).default_get(fields)
+    
     def _get_total_profit(self):
         for order in self:
             total_margin_percentage = 0
