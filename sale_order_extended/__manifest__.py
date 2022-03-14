@@ -13,7 +13,9 @@
              'wizard/merge_order.xml',
              'views/res_config_settings.xml',
              'report/saleorder_report.xml',
-             'report/saleorder_template.xml'
+             'report/saleorder_template.xml',
+             'report/stock_picking_template.xml',
+             'report/stock_picking_views_ext.xml'
              ],
     'demo': [],
     'installable': True,
