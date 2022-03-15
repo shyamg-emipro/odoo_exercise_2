@@ -17,4 +17,13 @@
         <field name="binding_model_id" ref="stock.model_stock_picking"/>
         <field name="binding_type">report</field>
     </record>
+
+    <record id="action_sale_order_extended_sales_by_salesperson" model="ir.actions.report">
+        <field name="name">Sales By Salesperson</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sale_order_extended.report_sales_by_salesperson</field>
+        <field name="binding_model_id" ref="sale_crm.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
 </odoo>

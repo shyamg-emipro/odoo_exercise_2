@@ -2,3 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_sale_order_extended,User: Sale Order Extended,model_sale_order,sales_team.group_sale_salesman,1,1,1,1
 access_crm_lead_extended,User: Crm Lead Extended,model_crm_lead,sales_team.group_sale_salesman,1,1,1,1
 access_sale_order_merge_user,User: Sale Order Merge,model_sale_order_merge,base.group_user,1,1,1,1
+access_sales_by_salesperson,User: Sales by salesperson,model_sales_by_salesperson,base.group_user,1,1,1,1

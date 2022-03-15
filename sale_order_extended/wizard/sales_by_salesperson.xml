@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_sale_by_salesperson_form" model="ir.ui.view">
+        <field name="name">sales.by.salesperson.form</field>
+        <field name="model">sales.by.salesperson</field>
+        <field name="arch" type="xml">
+            <form string="Sales By Sales Person">
+                <group>
+                    <group>
+                        <field name="from_date"/>
+                        <field name="salesperson" widget="many2many_tags"/>
+                    </group>
+                    <group>
+                        <field name="to_date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="get_sales_analysis_report" string="Get Sales Analysis Report" type="object"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sales_by_salesperson_window" model="ir.actions.act_window">
+        <field name="name">Sales By Salesperson</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="binding_model_id" ref="sale_crm.model_sale_order"/>
+        <field name="binding_type">action</field>
+        <field name="binding_view_types">list,form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_sale_by_salesperson_form"/>
+        <field name="res_model">sales.by.salesperson</field>
+    </record>
+</odoo>

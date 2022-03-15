@@ -6,6 +6,7 @@
     """,
     'depends': ['base', 'sale_crm', 'product'],
     'data': ['security/security.xml',
+             'security/ir.model.access.csv',
              'views/sale_order.xml',
              'data/crm_tags.xml',
              'views/product_product.xml',
@@ -15,7 +16,9 @@
              'report/saleorder_report.xml',
              'report/saleorder_template.xml',
              'report/stock_picking_template.xml',
-             'report/stock_picking_views_ext.xml'
+             'report/stock_picking_views_ext.xml',
+             'wizard/sales_by_salesperson.xml',
+             'report/sales_by_salesperson_template.xml'
              ],
     'demo': [],
     'installable': True,
