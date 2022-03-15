@@ -4,7 +4,7 @@
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
-                    <t t-foreach="product_do_qty.items()" t-as="item">
+                    <t t-foreach="self.get_grouped_do(docs, group_by_location=False).items()" t-as="item">
                         <h5 t-field="item[0][0].name"/>
                         <t t-foreach="item[0][1]" t-as="attribute">
                             <span t-field="attribute.name"/>
@@ -49,44 +49,48 @@
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
-                    <t t-foreach="self.get_products_do_by_location()" t-as="test">
-                        <t t-field="test"/>
-                    </t>
-                    <t t-foreach="product_do_qty.items()" t-as="item">
-                        <h5 t-field="item[0][0].name"/>
-                        <t t-foreach="item[0][1]" t-as="attribute">
-                            <span t-field="attribute.name"/>
-                        </t>
-                        <table class="table table-sm">
-                            <thead>
-                                <tr>
-                                    <th>Delivery Order</th>
-                                    <th>Demand</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <t t-set="total" t-value="0"/>
-                                <t t-foreach="item[1].items()" t-as="do_price">
+                    <t t-foreach="self.get_grouped_do(docs).items()" t-as="product_do_qty">
+                        <h3 t-esc="product_do_qty[0]"/>
+                        <hr/>
+                        <br/>
+                        <t t-foreach="product_do_qty[1].items()" t-as="item">
+                            <h5 t-field="item[0][0].name"/>
+                            <t t-foreach="item[0][1]" t-as="attribute">
+                                <span t-field="attribute.name"/>
+                            </t>
+                            <table class="table table-sm">
+                                <thead>
                                     <tr>
+                                        <th>Delivery Order</th>
+                                        <th>Demand</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="total" t-value="0"/>
+                                    <t t-foreach="item[1].items()" t-as="do_price">
+                                        <tr>
+                                            <td>
+                                                <span t-field="do_price[0].name"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="do_price[1]"/>
+                                                <t t-set="total" t-value="total+do_price[1]"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td></td>
                                         <td>
-                                            <span t-field="do_price[0].name"/>
-                                        </td>
-                                        <td>
-                                            <span t-esc="do_price[1]"/>
-                                            <t t-set="total" t-value="total+do_price[1]"/>
+                                            <b>Total </b>
+                                            <span t-esc="total" />
                                         </td>
                                     </tr>
-                                </t>
-                                <tr>
-                                    <td></td>
-                                    <td>
-                                        <b>Total </b>
-                                        <span t-esc="total" />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <br/><br/>
+                                </tbody>
+                            </table>
+                            <br/><br/>
+                        </t>
+                        <hr/>
+                        <br/><br/><br/>
                     </t>
                 </div>
             </t>
