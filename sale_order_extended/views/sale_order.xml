@@ -52,7 +52,7 @@
         <field name="arch" type="xml">
             <xpath expr="//filter[@name='order_date']" position="after">
                 <filter name="sale_order_extended_filter_is_all_picking_completed" string="Completed Sale Orders"
-                    domain="[('is_all_picking_completed', '=', False)]"/>
+                    domain="[('is_all_picking_completed', '=', True)]"/>
             </xpath>
         </field>
     </record>

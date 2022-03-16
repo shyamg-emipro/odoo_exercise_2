@@ -13,9 +13,9 @@ class SalesBySalesperson(models.TransientModel):
     def get_sales_analysis_report(self):
         # report = request.env['ir.actions.report']._get_report_from_name('sale_order_extended.report_sales_by_salesperson')
         # context = dict(request.env.context)
-        # pdf = report.with_context(context)._render_qweb_text(self._context.get('active_ids'), data={'from_date': self.from_date, 'to_date': self.to_date, 'salesperson': self.salesperson})
+        # pdf = report._render_qweb_pdf(self._context.get('active_ids'), data={'from_date': self.from_date, 'to_date': self.to_date, 'salesperson': self.salesperson.ids})
         # pdfhttpheaders = [('Content-Type', 'application/pdf'), ('Content-Length', len(pdf))]
-        # return request.make_response(pdf, headers=pdfhttpheaders)
+        # return http.HttpRequest.make_response(http.HttpRequest, pdf, headers=pdfhttpheaders)
         action = self.env['ir.actions.actions']._for_xml_id('sale_order_extended.action_sale_order_extended_sales_by_salesperson')
         action['data'] = {'from_date': self.from_date, 'to_date': self.to_date, 'salesperson': self.salesperson.ids}
         return action

@@ -13,7 +13,7 @@ class SalesBySalesperson(models.AbstractModel):
             if from_date:
                 domain.append(('date_order', '>=', from_date))
             if to_date:
-                domain.append(('date_order', '<=', from_date))
+                domain.append(('date_order', '<=', to_date))
             orders_of_person = self.env['sale.order'].search(domain)
             salesperson_wise_orders[person] = orders_of_person
         return salesperson_wise_orders
@@ -30,5 +30,7 @@ class SalesBySalesperson(models.AbstractModel):
             'doc_model': 'sale.order',
             'doc_ids': docids,
             'self': self,
-            'grouped_sale_orders': grouped_sale_orders
+            'grouped_sale_orders': grouped_sale_orders,
+            'from_date': data.get('from_date'),
+            'to_date': data.get('to_date')
         }
